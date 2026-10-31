@@ -8,7 +8,7 @@ explains fabrics in a researched reference guide, and writes a step-by-step maki
 shopfront with a quiet gentleman-spy wit. Built on [Anvil](https://anvil.works).
 
 - **App repo:** github.com/arkulinskis/make-your-own-clothes (branch `master`). Anvil pulls `master`.
-- **Live:** not published yet (clone it into Anvil from GitHub, then publish).
+- **Live:** https://make-my-clothes.anvil.app
 
 ## What it does
 
