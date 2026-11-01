@@ -3864,56 +3864,16 @@
           ['Who sees my measurements?', 'Only you. They stay in your browser, and on your account if you open one. Garments are private unless you share them in the showroom. The Privacy & Terms page has the details.']]
   };
 
-  function heroArt() {
-    var t = function (x, y, s, txt, fs, fill, ls) { return '<text x="' + x + '" y="' + y + '" font-family="Cinzel, Georgia, serif" font-size="' + fs + '" fill="' + fill + '" text-anchor="middle" letter-spacing="' + (ls || 4) + '" font-weight="' + s + '">' + txt + '</text>'; };
+  // the mannequin in the window, in a pinstripe waistcoat (cropped from the old shopfront drawing)
+  function mannequin() {
     var stripes = ''; for (var i = 0; i < 9; i++) stripes += '<line x1="' + (96 + i * 7) + '" y1="196" x2="' + (96 + i * 7) + '" y2="290" stroke="#d9d4c4" stroke-width=".7" opacity=".55"/>';
-    var bolts = [['#7a2531', '#a8823e'], ['#1f3d30', '#c9a35d'], ['#6b5a43', '#e7cf98'], ['#2c4a73', '#d9d4c4'], ['#8c9a7a', '#efe6cf']].map(function (b, k) {
-      var x = 376 + (k % 3) * 34, y = 236 - Math.floor(k / 3) * 44;
-      return '<rect x="' + x + '" y="' + y + '" width="30" height="40" rx="3" fill="' + b[0] + '"/><rect x="' + x + '" y="' + (y + 16) + '" width="30" height="4" fill="' + b[1] + '" opacity=".8"/>';
-    }).join('');
-    return '<svg class="lp-shop" viewBox="0 0 540 420" role="img" aria-label="A tailor\'s shopfront: Make Your Own Clothes, bespoke tailors" onclick="this.classList.toggle(\'open\')">' +
-      '<defs><linearGradient id="lpWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3528"/><stop offset="1" stop-color="#0f2018"/></linearGradient>' +
-      '<linearGradient id="lpGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a3226"/><stop offset=".55" stop-color="#211c15"/><stop offset="1" stop-color="#2d261c"/></linearGradient>' +
-      '<linearGradient id="lpBrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e7cf98"/><stop offset="1" stop-color="#a8823e"/></linearGradient>' +
-      '<radialGradient id="lpLamp" cx=".5" cy=".2" r=".8"><stop offset="0" stop-color="#ffe7b0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe7b0" stop-opacity="0"/></radialGradient></defs>' +
-      // pavement + building
-      '<rect x="0" y="392" width="540" height="28" fill="#2a2a26"/><rect x="0" y="392" width="540" height="3" fill="#4a463e"/>' +
-      '<rect x="14" y="20" width="512" height="374" fill="url(#lpWall)" stroke="#0a140f" stroke-width="2"/>' +
-      // cornice + fascia
-      '<rect x="6" y="14" width="528" height="14" fill="#0f2018"/><rect x="6" y="26" width="528" height="4" fill="url(#lpBrass)"/>' +
-      '<rect x="30" y="40" width="480" height="70" fill="#102619" stroke="url(#lpBrass)" stroke-width="3"/>' +
-      '<rect x="38" y="48" width="464" height="54" fill="none" stroke="#c9a35d" stroke-width=".8" opacity=".6"/>' +
-      t(270, 81, 700, 'MAKE YOUR OWN CLOTHES', 25, 'url(#lpBrass)', 3) + t(270, 98, 500, 'BESPOKE TAILORS · EST. 2026', 9.5, '#d8b878', 5) +
-      // pilasters
-      '<rect x="30" y="118" width="16" height="274" fill="#163023"/><rect x="494" y="118" width="16" height="274" fill="#163023"/><rect x="246" y="118" width="48" height="274" fill="#163023"/>' +
-      // left window: mannequin in a pinstripe waistcoat
-      '<rect x="56" y="124" width="180" height="230" fill="url(#lpGlass)" stroke="#c9a35d" stroke-width="3"/><rect x="56" y="124" width="180" height="230" fill="url(#lpLamp)"/>' +
-      '<line x1="146" y1="124" x2="146" y2="138" stroke="#c9a35d" stroke-width="1.5"/><circle cx="146" cy="142" r="5" fill="#ffe7b0" opacity=".9"/>' +
+    return '<svg viewBox="76 150 140 200" aria-hidden="true"><defs><linearGradient id="lpBrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e7cf98"/><stop offset="1" stop-color="#a8823e"/></linearGradient></defs>' +
       '<g class="sway"><rect x="140" y="160" width="12" height="10" fill="#c9a35d"/><ellipse cx="146" cy="158" rx="5" ry="4" fill="#4a2f1c"/>' +
       '<path d="M112 178 Q146 166 180 178 L186 214 Q178 250 176 296 L116 296 Q114 250 106 214 Z" fill="#d6c7a6"/>' +
       '<path d="M118 184 Q146 176 174 184 L178 214 Q172 254 172 300 L120 300 Q120 254 114 214 Z" fill="#1b2436"/>' + stripes +
       '<path d="M146 186 L136 232 L146 304 L156 232 Z" fill="#efe6cf"/><path d="M141 190 L146 222 L151 190 L146 200 Z" fill="#7a2531"/>' +
       [240, 254, 268, 282].map(function (y) { return '<circle cx="148" cy="' + y + '" r="1.9" fill="url(#lpBrass)"/>'; }).join('') +
-      '<rect x="143" y="300" width="6" height="40" fill="#c9a35d"/><ellipse cx="146" cy="344" rx="22" ry="5" fill="#4a2f1c"/></g>' +
-      '<path d="M64 134 l60 -2" stroke="#fff" stroke-width="2" opacity=".07"/><path d="M200 330 l30 -60" stroke="#fff" stroke-width="6" opacity=".05"/>' +
-      // the door
-      '<rect x="252" y="160" width="36" height="194" fill="#0b1510"/><rect class="glow" x="252" y="160" width="36" height="194" fill="#ffd58a" opacity=".0"/>' +
-      '<g class="door"><rect x="252" y="160" width="36" height="194" fill="#173225" stroke="#c9a35d" stroke-width="2"/>' +
-      '<rect x="257" y="168" width="26" height="92" fill="url(#lpGlass)" stroke="#c9a35d" stroke-width="1"/>' + t(270, 214, 600, 'OPEN', 6.5, '#d8b878', 2) +
-      '<rect x="257" y="270" width="26" height="74" fill="none" stroke="#c9a35d" stroke-width="1" opacity=".7"/><circle cx="282" cy="262" r="2.6" fill="url(#lpBrass)"/></g>' +
-      '<rect x="248" y="136" width="44" height="18" fill="#102619" stroke="#c9a35d" stroke-width="1"/>' + t(270, 149, 600, 'No. 7', 9, '#d8b878', 1) +
-      // right window: shears, tape, bolts of cloth
-      '<rect x="304" y="124" width="180" height="230" fill="url(#lpGlass)" stroke="#c9a35d" stroke-width="3"/><rect x="304" y="124" width="180" height="230" fill="url(#lpLamp)"/>' +
-      '<line x1="394" y1="124" x2="394" y2="138" stroke="#c9a35d" stroke-width="1.5"/><circle cx="394" cy="142" r="5" fill="#ffe7b0" opacity=".9"/>' +
-      '<rect x="318" y="282" width="152" height="8" fill="#4a2f1c"/>' + bolts +
-      '<g transform="translate(330 176) rotate(-28)"><path d="M0 0 L40 6 L40 9 L0 4 Z" fill="#d8d8d0"/><path d="M0 12 L40 9 L40 12 L0 16 Z" fill="#bdbdb4"/>' +
-      '<circle cx="-8" cy="4" r="6" fill="none" stroke="url(#lpBrass)" stroke-width="3"/><circle cx="-8" cy="16" r="6" fill="none" stroke="url(#lpBrass)" stroke-width="3"/></g>' +
-      '<path d="M318 330 q40 -26 80 -4 t70 -6" fill="none" stroke="#e7cf98" stroke-width="5" stroke-dasharray="2 4" opacity=".85"/>' +
-      // window sills + step
-      '<rect x="50" y="354" width="192" height="8" fill="url(#lpBrass)"/><rect x="298" y="354" width="192" height="8" fill="url(#lpBrass)"/>' +
-      '<rect x="244" y="354" width="52" height="38" fill="#2f2b24"/><rect x="238" y="384" width="64" height="8" fill="#3d382f"/>' +
-      '<rect x="50" y="362" width="192" height="30" fill="#132a1e"/><rect x="298" y="362" width="192" height="30" fill="#132a1e"/>' +
-      '</svg>';
+      '<rect x="143" y="300" width="6" height="40" fill="#c9a35d"/><ellipse cx="146" cy="344" rx="22" ry="5" fill="#4a2f1c"/></g></svg>';
   }
 
   UI.page('landing', { title: 'Bespoke patterns, cut to you' }, function (view, ctx) {
@@ -3927,11 +3887,15 @@
       return '<a class="ui-card lp-pat" href="#patterns" data-go="patterns"><div class="t">' + MY.patternThumb(dr, MY.fabric(pat.fabrics[0]).look) + '</div><b>' + esc(pat.short) + '</b><span class="small muted">' + esc(pat.time) + '</span></a>';
     }).join('');
     view.innerHTML =
-      '<section class="lp-hero"><div class="ui-wrap"><div>' +
-        '<div class="eyebrow">' + esc(C.eyebrow) + '</div><h1>' + C.title + '</h1><p class="lp-lead">' + esc(C.lead) + '</p>' +
+      '<section class="lp-hero"><div class="ui-wrap"><div class="lp-fascia"><b>MAKE YOUR OWN CLOTHES</b><span>' + esc(C.eyebrow.toUpperCase()) + '</span></div>' +
+        '<div class="lp-bays"><div class="lp-win lp-man-win" aria-hidden="true"><span class="lamp"></span><div class="lp-man">' + mannequin() + '</div></div>' +
+        '<a class="lp-door lp-pil" href="' + (me ? '#wardrobe' : '#patterns') + '" data-go="' + (me ? 'wardrobe' : 'patterns') + '" aria-label="' + esc(me ? 'Your wardrobe' : C.cta) + '">' +
+          '<span class="no">No. 7</span><span class="frame"><i>THE<br>WORKSHOP</i><span class="leaf"><span class="gl">OPEN</span><span class="pn"></span></span></span>' +
+          '<span class="step">' + esc(me ? 'Your wardrobe' : C.cta) + ' →</span></a>' +
+        '<div class="lp-win lp-copy"><span class="lamp"></span><div class="eyebrow">In the window this season</div><h1>' + C.title + '</h1><p class="lp-lead">' + esc(C.lead) + '</p>' +
         '<div class="lp-cta">' + primary + '</div>' +
-        '<div class="lp-proof">' + C.proof.map(function (p) { return '<span>' + UI.icon('check') + esc(p) + '</span>'; }).join('') + '</div>' +
-      '</div>' + heroArt() + '</div></section>' +
+        '<div class="lp-proof">' + C.proof.map(function (p) { return '<span>' + UI.icon('check') + esc(p) + '</span>'; }).join('') + '</div></div></div>' +
+      '</div></section>' +
       '<section class="lp-section" id="how"><div class="ui-wrap"><div class="lp-head"><div class="eyebrow">The fitting, in four parts</div><h2>From tape measure to finished garment</h2><p>The way a bespoke tailor works, rebuilt for your kitchen table.</p></div>' +
         '<div class="lp-steps">' + C.steps.map(function (s) { return '<div class="ui-card lp-step"><h3>' + esc(s[0]) + '</h3><p class="muted" style="margin:0">' + esc(s[1]) + '</p></div>'; }).join('') + '</div></div></section>' +
       '<section class="lp-section"><div class="ui-wrap"><div class="lp-head"><div class="eyebrow">In the shop</div><h2>Everything a tailor keeps behind the counter</h2></div>' +

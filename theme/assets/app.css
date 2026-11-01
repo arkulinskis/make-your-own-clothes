@@ -441,22 +441,53 @@ html.my-printing body { background: #fff !important; background-image: none !imp
 
 /* ===== landing.html ===== */
 .page-landing .ui-main { overflow-x: clip; }
-.lp-hero { position: relative; padding: 46px 0 30px; }
-.lp-hero .ui-wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1.05fr; gap: 44px; align-items: center; padding-top: 0; padding-bottom: 0; }
-.lp-hero h1 { font-size: clamp(2.5rem, 5.6vw, 4.3rem); line-height: 1; margin-bottom: 18px; }
-.lp-hero h1 em { font-style: italic; color: var(--c-accent); font-weight: 600; }
-.lp-lead { font-size: 1.16rem; color: var(--c-muted); max-width: 34em; margin-bottom: 26px; }
-.lp-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-.lp-proof { margin-top: 22px; display: flex; gap: 18px; flex-wrap: wrap; color: var(--c-muted); font-size: .92rem; }
-.lp-proof span { display: inline-flex; gap: 6px; align-items: center; }
-.lp-proof .ui-ic { color: var(--c-good); }
-.lp-shop { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 40px rgba(0,0,0,.25)); }
-.lp-shop .door { transition: transform .9s cubic-bezier(.3,.7,.2,1); transform-box: fill-box; transform-origin: left center; }
-.lp-shop:hover .door, .lp-shop.open .door { transform: perspective(600px) rotateY(-64deg); }
-.lp-shop .glow { opacity: 0; transition: opacity .9s; }
-.lp-shop:hover .glow, .lp-shop.open .glow { opacity: 1; }
-.lp-shop .sway { animation: lp-sway 6s ease-in-out infinite; transform-origin: 50% 0; transform-box: fill-box; }
+/* "The object itself" hero: the whole hero IS the shopfront. Brass fascia, the mannequin window on the left, the door in the
+   middle (it's the Step inside button: it swings open on hover), and the pitch lettered in gold on the right-hand window.
+   The shop looks the same in light and dark: it's a building. */
+.lp-hero { position: relative; padding: 18px 0 0; background: linear-gradient(#1b3528, #0f2018); color: #efe6cf; border-top: 14px solid #0f2018;
+  box-shadow: inset 0 4px 0 #c9a35d; }
+.lp-hero::after { content: ""; display: block; height: 30px; margin-top: 0; background: linear-gradient(#4a463e 0 3px, #2a2a26 3px); }
+.lp-hero .ui-wrap { position: relative; z-index: 1; max-width: 1120px; padding-top: 0; padding-bottom: 0; }
+.lp-fascia { border: 3px solid #c9a35d; background: #102619; text-align: center; padding: 14px 12px 12px; box-shadow: inset 0 0 0 6px #102619, inset 0 0 0 7px rgba(201, 163, 93, .55); }
+.lp-fascia b { display: block; font: 700 clamp(1.3rem, 3.6vw, 2.5rem)/1.1 Cinzel, Georgia, serif; letter-spacing: .12em;
+  background: linear-gradient(#e7cf98, #a8823e); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lp-fascia span { display: block; font: 500 .72rem/1 Cinzel, Georgia, serif; letter-spacing: .3em; color: #d8b878; margin-top: 6px; }
+.lp-bays { display: grid; grid-template-columns: .8fr 150px 1.45fr; gap: 0; margin-top: 18px; align-items: stretch; }
+.lp-bays > * { position: relative; }
+.lp-pil { border-left: 16px solid #163023; border-right: 16px solid #163023; }
+.lp-win { background: linear-gradient(135deg, #3a3226, #211c15 55%, #2d261c); border: 3px solid #c9a35d; border-bottom-width: 10px; min-height: 420px; overflow: hidden; }
+.lp-win::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(255, 231, 176, .3), transparent 65%); pointer-events: none; }
+.lp-win::after { content: ""; position: absolute; left: 6%; top: 4%; width: 40%; height: 2px; background: rgba(255, 255, 255, .08); transform: rotate(-1deg); }
+.lp-win .lamp { position: absolute; left: 50%; top: 0; width: 2px; height: 16px; background: #c9a35d; }
+.lp-win .lamp::after { content: ""; position: absolute; left: -5px; top: 14px; width: 12px; height: 12px; border-radius: 50%; background: #ffe7b0; box-shadow: 0 0 22px #ffe7b0; }
+.lp-man { position: absolute; left: 50%; bottom: 0; width: 76%; transform: translateX(-50%); }
+.lp-man svg { width: 100%; height: auto; display: block; }
+.lp-man .sway { animation: lp-sway 6s ease-in-out infinite; transform-origin: 50% 0; transform-box: fill-box; }
 @keyframes lp-sway { 50% { transform: rotate(2.2deg); } }
+.lp-copy { padding: 34px 38px 30px; }
+.lp-copy .eyebrow { color: #d8b878; }
+.lp-hero h1 { font-size: clamp(2.2rem, 4.4vw, 3.5rem); line-height: 1.02; margin: 12px 0 14px; color: #f3e7c8; text-shadow: 0 2px 0 rgba(0, 0, 0, .4); }
+.lp-hero h1 em { font-style: italic; font-weight: 600; background: linear-gradient(#f0d9a0, #b48b45); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lp-lead { font-size: 1.04rem; color: #d9cfb8; max-width: 34em; margin-bottom: 22px; }
+.lp-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.lp-hero .ui-btn:not(.primary) { background: transparent; color: #efe6cf; border-color: rgba(231, 207, 152, .5); }
+.lp-proof { margin-top: 18px; display: flex; gap: 8px 18px; flex-wrap: wrap; color: #cbbf9f; font-size: .88rem; }
+.lp-proof span { display: inline-flex; gap: 6px; align-items: center; }
+.lp-proof .ui-ic { color: #d8b878; }
+/* the door: a real link. It swings open on hover / focus and shows the warm workshop behind it. */
+.lp-door { display: flex; flex-direction: column; align-items: stretch; padding-top: 34px; text-decoration: none; color: #d8b878; perspective: 700px; }
+.lp-door .no { align-self: center; font: 600 .78rem/1 Cinzel, Georgia, serif; border: 1px solid #c9a35d; background: #102619; padding: 5px 10px; margin-bottom: 10px; }
+.lp-door .frame { position: relative; flex: 1; background: radial-gradient(ellipse at 40% 40%, #ffd58a, #d9902e 70%, #7a4a14); border: 3px solid #0b1510; min-height: 300px; }
+.lp-door .frame i { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); font: 700 .74rem/1.3 Cinzel, Georgia, serif; color: #3a2408; text-align: center; letter-spacing: .1em; font-style: normal; }
+.lp-door .leaf { position: absolute; inset: 0; background: #173225; border: 2px solid #c9a35d; transform-origin: left center; transition: transform .9s cubic-bezier(.3, .7, .2, 1);
+  display: grid; grid-template-rows: 1.2fr 1fr; gap: 10px; padding: 10px; box-shadow: 6px 0 18px rgba(0, 0, 0, .35); }
+.lp-door .leaf .gl { background: linear-gradient(135deg, #3a3226, #211c15); border: 1px solid #c9a35d; display: grid; place-items: center; font: 600 .7rem/1 Cinzel, Georgia, serif; letter-spacing: .2em; }
+.lp-door .leaf .pn { border: 1px solid rgba(201, 163, 93, .7); position: relative; }
+.lp-door .leaf .pn::after { content: ""; position: absolute; right: 6px; top: -10px; width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(#e7cf98, #a8823e); }
+.lp-door:hover .leaf, .lp-door:focus-visible .leaf { transform: rotateY(-68deg); }
+.lp-door .step { margin-top: 10px; text-align: center; font: 700 .9rem/1 Cinzel, Georgia, serif; letter-spacing: .12em; color: #f0d9a0; padding: 10px 6px; border: 2px solid #c9a35d; background: #102619; }
+.lp-door:focus-visible { outline: 3px solid #f0d9a0; outline-offset: 4px; }
+.lp-door .no, .lp-door .gl { color: #d8b878 !important; } .lp-door .step { color: #f0d9a0 !important; }
 .lp-section { padding: 52px 0; }
 .lp-section .ui-wrap { padding-top: 0; padding-bottom: 0; }
 .lp-head { text-align: center; max-width: 680px; margin: 0 auto 32px; }
@@ -485,12 +516,16 @@ html.my-printing body { background: #fff !important; background-image: none !imp
 .lp-band p { margin: 0; opacity: .85; }
 @media (max-width: 900px) {
   .lp-hero { padding-top: 28px; }
-  .lp-hero .ui-wrap { grid-template-columns: 1fr; gap: 26px; }
+  .lp-bays { grid-template-columns: 1fr 130px; }
+  .lp-copy { grid-column: 1 / -1; grid-row: 1; margin-bottom: 14px; padding: 26px 22px 22px; }
+  .lp-win.lp-man-win { min-height: 300px; }
+  .lp-door .frame { min-height: 210px; }
   .lp-steps { grid-template-columns: 1fr 1fr; }
   .lp-band { padding: 28px 22px; }
   .lp-section { padding: 38px 0; }
 }
 @media (max-width: 560px) { .lp-steps { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .lp-man .sway { animation: none; } .lp-door .leaf { transition: none; } }
 
 /* ===== measure.html ===== */
 .ms-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 22px; align-items: start; }
