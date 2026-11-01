@@ -406,7 +406,7 @@ metadata:
   title: 'Make Your Own Clothes: made-to-measure sewing patterns'
 name: Make Your Own Clothes
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=7c9c2205fe\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/makeyourownclothes.json\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=282d271d0c\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/makeyourownclothes.json\
     \ and run seo.py, not here) -->\n<link rel=\"canonical\" href=\"https://make-my-clothes.anvil.app/\">\n<meta name=\"robots\"\
     \ content=\"index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1\">\n<meta name=\"keywords\" content=\"\
     made to measure sewing patterns, custom sewing pattern generator, pattern drafting online, sew your own clothes, 3D garment\
