@@ -38,7 +38,7 @@ shopfront with a quiet gentleman-spy wit. Built on [Anvil](https://anvil.works).
 - **Showroom** (`#showroom`): garments members shared, drawn from their real patterns; tip your hat, open read-only, copy.
 - **Send to a tailor** (`#tailor/<pid>`): the printable tailor's docket, the commission waiting list (members), the guild
   application for seamstresses and tailors (anyone).
-- Sign-up with email and password, a feedback form, the Privacy & Terms page.
+- Sign-up with email and password or Google, a feedback form, the Privacy & Terms page.
 
 **For members:** the **Wardrobe** home (`#wardrobe`): garments with thumbnails, status and progress, the dossier, and a banner
 that moves drafts made before signing in into the account. Garments and measurements are saved on the server; share to the
@@ -56,7 +56,7 @@ Showroom; requests to a tailor.
 ## Setting it up in Anvil (once)
 
 1. In the Anvil editor: **Create app → Clone from GitHub**, and paste `https://github.com/arkulinskis/make-your-own-clothes`.
-2. **Users** service: email + password, sign-up allowed (already set in `anvil.yaml`; check it).
+2. **Users** service: email + password and "Continue with Google", sign-up allowed (already set in `anvil.yaml`; check it).
 3. Open the app in the editor. If it shows a **Schema Mismatch** alert, choose **"The schema of the source code is correct"** so Anvil creates the tables.
 4. **Run** it and sign up with **arkulinskis@gmail.com** straight away (that account becomes the admin).
 5. **Publish** (Publish → public URL, or your own domain).
