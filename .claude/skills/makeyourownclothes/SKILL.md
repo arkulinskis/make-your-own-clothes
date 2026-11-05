@@ -14,15 +14,12 @@ their work lives in localStorage and is imported on sign-in.
 
 **Where it lives:**
 - Folder `C:\Users\arkvi\Documents\CLAUDE\make-your-own-clothes-forms\` = the git clone of
-  **github.com/arkulinskis/make-your-own-clothes**. "git" layout: the folder *is* the Anvil app. Native Forms were built on
-  branch `forms` (2026-11-05); until the user approves and it's merged, master and the live app run the old JavaScript
-  version from `C:\Users\arkvi\Documents\CLAUDE\make-your-own-clothes` (source layout, tools/deploy.py). Live:
+  **github.com/arkulinskis/make-your-own-clothes**. "git" layout: the folder *is* the Anvil app. Anvil pulls master;
+  pushing is the deploy. Native Forms since 2026-11-05 (merged); the old JavaScript folder
+  `C:\Users\arkvi\Documents\CLAUDE\make-your-own-clothes` is retired (its deploy.py refuses). Live:
   https://make-my-clothes.anvil.app
 - Converted from the JS-template app with APP_MAKER/template-forms; same addresses, tables, callables and look.
 - **README.md** lists every feature. Keep it up to date.
-- Privacy & Terms for the commission board: `APP_MAKER/legal-kit/apps/_pending/makeyourownclothes.json` (installed into
-  this branch only). When `forms` merges: copy it over `apps/makeyourownclothes.json`, `build.py` + `install.py` (it bumps
-  the terms version to 2026-11-05, so members re-accept).
 
 **What the user wants:** "Kingsman"-style: a Savile Row tailor's shopfront, gentleman-spy wit without naming the film. Bottle
 green fascia header (`--c-fascia`), brass lettering (`--c-brass`), oxblood accents (`--c-oxblood`), tailor's paper background;
@@ -115,6 +112,6 @@ contact_shared, reviewed, reviewed_by), **bid_messages** (bid, request, sender, 
 
 ## Privacy & Terms (legal kit)
 
-From `APP_MAKER/legal-kit` (see above for the pending facts). Install into this folder with
-`install.APPS["makeyourownclothes"] = ("make-your-own-clothes-forms", "git"); install.install("makeyourownclothes", False)`
-until apps.json points here, then `python tools/assets.py`. Sign-up keeps the tick box; feedback = Prepsto only.
+From `APP_MAKER/legal-kit`: change `apps/makeyourownclothes.json` (it covers the commission board and fit changes since
+2026-11-05), then there `python -I build.py makeyourownclothes && python -I install.py makeyourownclothes`, then
+`python tools/assets.py` here and deploy. Sign-up keeps the tick box; feedback = Prepsto only.
