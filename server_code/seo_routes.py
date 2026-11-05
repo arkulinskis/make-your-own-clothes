@@ -38,11 +38,13 @@ SEO = {
  ],
  "features": [
   "13 measurements with how-to help, in cm or inches",
-  "Nine patterns drafted live: T-shirt, waistcoat, dress, skirts, trousers and more",
+  "Eleven patterns drafted live: T-shirt, men's shirt, waistcoat, tailored jacket, dress, skirts, trousers and more",
   "Redraw patterns on a cutting table",
+  "Type fit changes from your test garment and redraft",
   "A 3D cloth simulation on your own mannequin",
   "A fabric reference guide",
-  "A step-by-step making book"
+  "A step-by-step making book",
+  "A commission board where seamstresses and tailors quote to make your garment"
  ],
  "faq": [
   [
@@ -51,7 +53,7 @@ SEO = {
   ],
   [
    "Which garments can I make?",
-   "A T-shirt, waistcoat, shift dress, A-line and circle skirts, drawstring trousers, a kimono jacket, a tote bag and a bodice block."
+   "A T-shirt, a men's shirt with collar and cuffs, a waistcoat, a tailored jacket, a shift dress, A-line and circle skirts, drawstring trousers, a kimono jacket, a tote bag and a bodice block."
   ],
   [
    "Do I need an account?",
@@ -59,7 +61,7 @@ SEO = {
   ]
  ],
  "site": "https://make-my-clothes.anvil.app",
- "updated": "2026-11-03",
+ "updated": "2026-11-05",
  "icon": "icon-512.png",
  "colors": {
   "bg": "#142a20",
