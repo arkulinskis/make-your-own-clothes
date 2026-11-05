@@ -1,0 +1,19 @@
+<div class="ui pd-dialog">
+  <anvil-component type="Label" name="eyebrow" prop:role='["eyebrow-label"]'></anvil-component>
+  <anvil-component type="Label" name="title" prop:role='["dlg-title"]'></anvil-component>
+  <anvil-component type="Label" name="about" prop:role='["muted-p"]'></anvil-component>
+  <div class="pd-art"><anvil-component type="Make_Your_Own_Clothes.Components.Html" name="art"></anvil-component></div>
+  <div class="my-kv">
+    <span class="kv-k-s">Difficulty</span><anvil-component type="Make_Your_Own_Clothes.Components.Html" name="meter"></anvil-component>
+    <span class="kv-k-s">Pieces</span><anvil-component type="Label" name="pieces" prop:role='["kv-v"]'></anvil-component>
+    <span class="kv-k-s">Cloth</span><anvil-component type="Label" name="cloths" prop:role='["kv-v"]'></anvil-component>
+    <span class="kv-k-s">Notions</span><anvil-component type="Label" name="notions" prop:role='["kv-v"]'></anvil-component>
+  </div>
+  <anvil-component type="RepeatingPanel" name="info_panel" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["my-kv"]'></anvil-component>
+  <hr class="my-rule">
+  <anvil-component type="Label" name="refs" prop:role='["fine-print"]'></anvil-component>
+  <div class="ui-row end">
+    <anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component>
+    <anvil-component type="Button" name="begin_button" prop:text="Begin this garment" prop:role='["btn", "btn-primary", "ic-scissors"]'></anvil-component>
+  </div>
+</div>

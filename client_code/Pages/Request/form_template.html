@@ -1,0 +1,82 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-empty" anvil:name="missing"><i class="ic ic-lock"></i><h3>That request isn't here</h3>
+        <anvil-component type="Label" name="missing_text"></anvil-component><a class="ui-btn" href="#requests">The commission board</a></div>
+      <div anvil:name="main">
+        <a class="rq-back" href="#requests"><i class="ic ic-back"></i>The commission board</a>
+        <div class="my-head">
+          <div>
+            <div class="eyebrow">A commission</div>
+            <anvil-component type="Label" name="title" prop:role='["page-h1"]'></anvil-component>
+            <anvil-component type="Label" name="meta" prop:role='["muted-p"]'></anvil-component>
+          </div>
+          <anvil-component type="Label" name="status" prop:role='["badge"]'></anvil-component>
+        </div>
+        <div class="rq-layout">
+          <div class="ui-stack">
+            <div class="ui-card rq-brief">
+              <div class="art"><anvil-component type="Make_Your_Own_Clothes.Components.Html" name="art"></anvil-component></div>
+              <anvil-component type="Make_Your_Own_Clothes.Components.Docket" name="docket"></anvil-component>
+            </div>
+            <p class="ui-hint rq-supervised"><i class="ic ic-shield"></i> Every quote, and every message a tailor sends, is read by the shop before it reaches the member. Payment is agreed directly between the member and the tailor.</p>
+          </div>
+
+          <div class="ui-stack">
+            <!-- the member's own request -->
+            <div anvil:name="owner_part" class="ui-stack">
+              <div class="ui-card ui-stack rq-match" anvil:name="match_card">
+                <anvil-component type="Label" name="match_text"></anvil-component>
+                <anvil-component type="Button" name="invite_button" prop:text="Invite them to quote" prop:role='["btn", "btn-sm", "ic-send"]'></anvil-component>
+              </div>
+              <anvil-component type="Label" name="pending_text" prop:role='["msg-note"]'></anvil-component>
+              <h2 class="rq-h2">Quotes</h2>
+              <anvil-component type="RepeatingPanel" name="quotes" prop:item_template="Make_Your_Own_Clothes.Items.QuoteCard" prop:role='["ui-stack"]'></anvil-component>
+              <div class="ui-empty small" anvil:name="no_quotes"><i class="ic ic-inbox"></i><h3>No quotes yet</h3><p>They show up here once the shop has read them.</p></div>
+              <anvil-component type="Button" name="withdraw_button" prop:text="Withdraw this request" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+            </div>
+
+            <!-- a tailor's view -->
+            <div anvil:name="tailor_part" class="ui-stack">
+              <div class="ui-card ui-stack" anvil:name="my_quote_card">
+                <div class="qc-head"><h3>Your quote</h3><anvil-component type="Label" name="my_status" prop:role='["badge"]'></anvil-component></div>
+                <anvil-component type="Label" name="my_terms" prop:role='["strong"]'></anvil-component>
+                <anvil-component type="Label" name="my_message" prop:role='["qc-msg"]'></anvil-component>
+                <anvil-component type="Label" name="contact_text" prop:role='["msg-note"]'></anvil-component>
+                <div anvil:name="full_docket_part"><h4>The full docket</h4><anvil-component type="Make_Your_Own_Clothes.Components.Docket" name="full_docket"></anvil-component></div>
+                <div class="qc-thread" anvil:name="my_thread_part">
+                  <anvil-component type="RepeatingPanel" name="my_thread" prop:item_template="Make_Your_Own_Clothes.Items.MessageRow" prop:role='["ui-stack"]'></anvil-component>
+                  <div anvil:name="my_reply" class="ui-stack">
+                    <label class="ui-field"><span>Write to the member</span><anvil-component type="TextArea" name="my_reply_box" prop:placeholder="The shop reads it first, then passes it on." prop:height="70"></anvil-component></label>
+                    <div class="ui-row end"><anvil-component type="Button" name="my_send" prop:text="Send" prop:role='["btn", "btn-sm", "ic-send"]'></anvil-component></div>
+                  </div>
+                </div>
+                <div class="ui-row"><anvil-component type="Button" name="edit_button" prop:text="Change my quote" prop:role='["btn", "btn-sm", "ic-edit"]'></anvil-component>
+                  <anvil-component type="Button" name="withdraw_quote" prop:text="Withdraw my quote" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component></div>
+              </div>
+              <div class="ui-card ui-stack" anvil:name="quote_form">
+                <h3>Send a quote</h3>
+                <anvil-component type="Label" name="guild_hint" prop:role='["fine-print"]'></anvil-component>
+                <div class="two">
+                  <label class="ui-field"><span>Your price for the making ($)</span><anvil-component type="TextBox" name="q_price" prop:type="number"></anvil-component></label>
+                  <label class="ui-field"><span>Days to make it</span><anvil-component type="TextBox" name="q_days" prop:type="number"></anvil-component></label>
+                </div>
+                <label class="ui-field"><span>Fittings</span><anvil-component type="TextBox" name="q_fittings" prop:type="number" prop:text="1"></anvil-component></label>
+                <label class="ui-field"><span>A note for the member</span><anvil-component type="TextArea" name="q_message" prop:placeholder="How you'd make it, your experience with this kind of garment, where the fitting would be. No emails, phone numbers or links." prop:height="110"></anvil-component></label>
+                <anvil-component type="Button" name="quote_button" prop:text="Send my quote to the shop" prop:role='["btn", "btn-primary", "ic-send"]'></anvil-component>
+              </div>
+              <anvil-component type="Label" name="closed_text" prop:role='["msg-note"]' prop:text="This request isn't taking quotes any more."></anvil-component>
+            </div>
+
+            <!-- signed out -->
+            <div class="ui-card ui-stack" anvil:name="guest_part">
+              <h3>Make this for them?</h3>
+              <p class="muted">Sign in to send a quote. Any account can quote; members of the guild get a verified badge.</p>
+              <div class="ui-row"><a class="ui-btn primary" anvil:name="signin_link" href="#auth">Sign in to quote</a><a class="ui-btn" href="#tailor">Join the guild</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

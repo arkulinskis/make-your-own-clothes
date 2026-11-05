@@ -43,18 +43,41 @@ DEMO_PROJECTS = [
      "tweed", {"weave": "herringbone", "color": "#6b5a43"}, "cutting", 2, "Matching the herringbone at the side seams: cutting single layer."),
     (8, "p0d1a0000000000009", "The Quiet Chalk", "The Fitting Toile (bodice block)", "block", "straight", "XL", {"ease": 8, "length": 18},
      "calico-toile", {"weave": "linen", "color": "#e6dcc5"}, "drafting", 0, "Toile for a winter waistcoat. Sloping shoulder: will redraw the back shoulder 1 cm lower."),
+    (2, "p0d1a000000000000a", "The Gilded Placket", "The Dispatch Shirt", "shirt", "straight", "M",
+     {"fit": "classic", "collar": "point", "cuff": "barrel", "pleat": "box", "hem": "curved", "length": 24},
+     "oxford-shirting", {"weave": "plain", "color": "#cfdcec"}, "done", 5, "Pale blue oxford, flat-felled throughout. Took in 1 cm at the side after the toile."),
+    (0, "p0d1a000000000000b", "The Embassy Grey", "The Embassy Jacket", "jacket", "straight", "L",
+     {"fit": "classic", "buttons": "2", "lapel": 7, "length": 26},
+     "worsted-suiting", {"weave": "herringbone", "color": "#4a4f57"}, "sewing", 2, "Grey herringbone, hair canvas, pad-stitched lapels. Sleeves next."),
 ]
-ADMIRES = [(1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (0, 1), (3, 1), (5, 1), (0, 4), (6, 4), (7, 4), (1, 6), (2, 6), (0, 2), (4, 3), (1, 5), (8, 7)]
+ADMIRES = [(0, 9), (4, 9), (6, 9), (1, 10), (3, 10), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (0, 1), (3, 1), (5, 1), (0, 4), (6, 4), (7, 4), (1, 6), (2, 6), (0, 2), (4, 3), (1, 5), (8, 7)]
+# (owner, project, city, area, budget, timeline, notes, remote ok): open requests on the commission board
 DEMO_COMMISSIONS = [
-    (0, 0, "Montréal", "300to600", "Before the holidays", "Would love it made up in the same cloth with a proper hand-finished lining.", "waiting"),
-    (3, 3, "Toronto", "150to300", "Next month", "I've cut it; I'd like someone to finish the binding and the zip neatly.", "contacted"),
+    (0, 0, "Montréal", "Mile End", "300to600", "Before the holidays", "Would love it made up in the same cloth with a proper hand-finished lining.", False),
+    (3, 3, "Toronto", "", "150to300", "Next month", "I've cut it; I'd like someone to finish the binding and the zip neatly.", True),
+    (2, 9, "Montréal", "Plateau", "150to300", "Spring", "A second one of these in white poplin, with double cuffs this time.", False),
 ]
+# (name, email, city, specialties, experience, note, status, kinds, remote)
 DEMO_TAILORS = [
-    ("Rosalind Pike", "rosalind.demo@example.com", "Leeds", "Waistcoats, trousers, alterations", "20+ years", "Trained in a Savile Row workroom, now working from home.", "verified"),
-    ("Kaito Mori", "kaito.demo@example.com", "Montréal", "Shirts, kimono, Japanese finishing", "8 years", "Happy to work from the app's dockets.", "new"),
-    ("Amara Osei", "amara.demo@example.com", "London", "Dresses, bias cuts, bridal", "12 years", "", "new"),
+    ("Rosalind Pike", "rosalind.demo@example.com", "Leeds", "Waistcoats, trousers, alterations", "20+ years", "Trained in a Savile Row workroom, now working from home.", "verified", ["Tailoring", "Trousers", "Alterations"], True),
+    ("Kaito Mori", "kaito.demo@example.com", "Montréal", "Shirts, kimono, Japanese finishing", "2–10 years", "Happy to work from the app's dockets.", "verified", ["Tops", "Jackets", "Tailoring"], False),
+    ("Amara Osei", "amara.demo@example.com", "London", "Dresses, bias cuts, bridal", "10–20 years", "", "new", ["Dresses", "Skirts"], True),
 ]
-DEMO_TABLES = ["admires", "commissions", "projects", "tailors"]
+# (tailor index, request index, price, days, fittings, message, status)
+DEMO_BIDS = [
+    (1, 0, 420, 21, 2, "I'd hand-finish the lining and the buttonholes. One fitting at the basting stage, one before the buttons. Workshop on Saint-Laurent.", "approved"),
+    (0, 0, 380, 28, 1, "Waistcoats are my daily bread. I can work from your docket with one fitting by video, and post it back.", "approved"),
+    (2, 1, 160, 10, 1, "Happy to finish the binding and set an invisible zip. I'd want to see the dress on you once.", "review"),
+    (0, 1, 140, 14, 0, "Send it over with the binding strips and I'll finish it by hand.", "approved"),
+    (1, 2, 210, 14, 1, "Double cuffs in white poplin: lovely. I'd use your docket as it is and fit once before the buttonholes.", "approved"),
+]
+# (bid index, role, body, status)
+DEMO_MESSAGES = [
+    (0, "member", "Lovely. Could the fitting be on a Saturday?", "approved"),
+    (0, "tailor", "Saturdays are fine, mornings best. Bring the shirt you'd wear under it.", "approved"),
+    (3, "tailor", "I could also take the hem up a touch if you'd like it shorter.", "review"),
+]
+DEMO_TABLES = ["bid_messages", "bids", "admires", "commissions", "projects", "tailors"]
 
 
 def state():
@@ -86,16 +109,33 @@ def load():
         app_tables.admires.add_row(user=users[who], project=projects[which], created=now, is_demo=True)
     for p in projects:
         p["admired"] = len(app_tables.admires.search(project=p))
-    for (who, which, city, budget, timeline, notes, status) in DEMO_COMMISSIONS:
+    from . import Tailors  # (Tailors imports Projects, which imports this module)
+    tailors = []
+    for (name, email, city, spec, exp, note, status, kinds, remote) in DEMO_TAILORS:
+        u = app_tables.users.get(email=email) or app_tables.users.add_row(email=email, enabled=False)
+        u.update(display_name=name, is_demo=True, signed_up=now - dt.timedelta(days=30))
+        tailors.append(app_tables.tailors.add_row(user=u, name=name, email=email, city=city, specialties=spec, experience=exp, note=note,
+                                                  status=status, kinds=kinds, remote=remote, created=now - dt.timedelta(days=12), is_demo=True))
+    reqs = []
+    for i, (who, which, city, area, budget, timeline, notes, remote) in enumerate(DEMO_COMMISSIONS):
         pr = projects[which]
-        d = pr["data"]
-        app_tables.commissions.add_row(user=users[who], project=pr, code=pr["code"], name=C.name_of(users[who]), email=users[who]["email"],
-                                       city=city, budget=budget, timeline=timeline, notes=notes, status=status, admin_note="",
-                                       docket={k: d.get(k) for k in ["pattern", "title", "code", "figure", "size", "opts", "fabric", "cloth"]},
-                                       created=now - dt.timedelta(days=1), is_demo=True)
-    for (name, email, city, spec, exp, note, status) in DEMO_TAILORS:
-        app_tables.tailors.add_row(name=name, email=email, city=city, specialties=spec, experience=exp, note=note, status=status,
-                                   created=now - dt.timedelta(days=2), is_demo=True)
+        d = pr["data"] or {}
+        when = now - dt.timedelta(days=3 - i, hours=2)
+        reqs.append(app_tables.commissions.add_row(
+            user=users[who], project=pr, code=pr["code"], title=d.get("title") or pr["code"], name=C.name_of(users[who]), email=users[who]["email"],
+            city=city, area=area, budget=budget, timeline=timeline, notes=notes, remote_ok=remote, status="open", public=True, admin_note="",
+            docket=Tailors._docket(d), brief=Tailors._brief(d), invited=[], created=when, posted=when, updated=when, is_demo=True))
+    bids = []
+    for (t, r, price, days, fittings, msg, status) in DEMO_BIDS:
+        when = now - dt.timedelta(hours=20 - len(bids) * 3)
+        bids.append(app_tables.bids.add_row(request=reqs[r], user=tailors[t]["user"], tailor=tailors[t], price=float(price), days=days,
+                                            fittings=fittings, message=msg, status=status, admin_note="", contact_shared=False,
+                                            created=when, updated=when, is_demo=True))
+    for k, (b, role, body, status) in enumerate(DEMO_MESSAGES):
+        bid = bids[b]
+        sender = bid["request"]["user"] if role == "member" else bid["user"]
+        app_tables.bid_messages.add_row(bid=bid, request=bid["request"], sender=sender, role=role, body=body, status=status,
+                                        admin_note="", created=now - dt.timedelta(hours=6 - k), is_demo=True)
     C.set_setting("demo", "loaded")
     return counts()
 

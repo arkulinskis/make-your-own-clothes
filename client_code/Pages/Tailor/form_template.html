@@ -1,0 +1,80 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="tl-hero">
+        <div><div class="eyebrow">The commission desk</div><h1 class="tl-h1">Send it to a seamstress</h1>
+          <p class="muted">Not every agent sews. Put your garment on the commission board: seamstresses and tailors send quotes for making it up to your measurements, in the cloth you choose. The shop reads every quote and message before it reaches you, and nobody sees your measurements until you accept a quote.</p>
+          <a class="ui-btn" href="#requests"><i class="ic ic-needle"></i>See the commission board</a></div>
+        <div class="ui-card tl-steps">
+          <div><b>You design it here.</b><br><span class="small muted">Pattern, measurements, redraws, fit changes, cloth: the docket has it all.</span></div>
+          <div><b>Post it on the board.</b><br><span class="small muted">Garment, size, budget and city. Never your name, email or measurements.</span></div>
+          <div><b>Tailors quote, you choose.</b><br><span class="small muted">The shop checks each quote first. Accept one, and you pay the tailor directly.</span></div>
+        </div>
+      </div>
+
+      <div anvil:name="docket_part">
+        <div class="my-sec-title"><h2>Your docket</h2></div>
+        <anvil-component type="Make_Your_Own_Clothes.Components.Docket" name="docket"></anvil-component>
+        <div class="ui-row tl-noprint">
+          <anvil-component type="Button" name="print_button" prop:text="Print the docket" prop:role='["btn", "ic-print"]'></anvil-component>
+          <anvil-component type="Button" name="svg_button" prop:text="Pattern file (SVG)" prop:role='["btn", "ic-download"]'></anvil-component>
+        </div>
+      </div>
+      <div anvil:name="choose_part">
+        <div class="my-sec-title"><h2>Which garment?</h2></div>
+        <div class="ui-grid"><anvil-component type="RepeatingPanel" name="choose_panel" prop:item_template="Make_Your_Own_Clothes.Items.SmallCard" prop:role='["contents"]'></anvil-component></div>
+      </div>
+
+      <div class="ui-grid two tl-noprint tl-forms">
+        <div class="ui-card ui-stack">
+          <h3>Open a request</h3>
+          <div anvil:name="req_none" class="ui-stack"><anvil-component type="Label" name="req_none_text" prop:role='["muted-p"]'></anvil-component><a class="ui-btn" href="#patterns"><i class="ic ic-scissors"></i>Choose a pattern</a></div>
+          <div anvil:name="req_guest" class="ui-stack"><p class="muted">Open an account so tailors can quote, and so the shop can pass their quotes to you.</p><a class="ui-btn primary" href="#auth/signup">Open an account</a></div>
+          <anvil-component type="Label" name="req_other" prop:role='["muted-p"]' prop:text="This is someone else's pattern. Make a copy in the Studio first."></anvil-component>
+          <div anvil:name="req_form" class="ui-stack tl-form">
+            <div class="two">
+              <label class="ui-field"><span>City</span><anvil-component type="TextBox" name="r_city" prop:placeholder="Where you'd go for a fitting"></anvil-component></label>
+              <label class="ui-field"><span>Neighbourhood <em>(optional)</em></span><anvil-component type="TextBox" name="r_area" prop:placeholder="e.g. Plateau, Shoreditch"></anvil-component></label>
+            </div>
+            <div class="two">
+              <label class="ui-field"><span>When by</span><anvil-component type="TextBox" name="r_timeline" prop:placeholder="e.g. before March"></anvil-component></label>
+              <label class="ui-field"><span>Budget for the making (not the cloth)</span><anvil-component type="DropDown" name="r_budget"></anvil-component></label>
+            </div>
+            <label class="ui-field"><span>Notes for the tailor <em>(optional, public)</em></span><anvil-component type="TextArea" name="r_notes" prop:placeholder="Lining, buttons, anything you'd like them to know. No emails or phone numbers: the shop passes messages on." prop:height="90"></anvil-component></label>
+            <anvil-component type="CheckBox" name="r_remote" prop:text="A tailor further away is fine (fittings by post or video)"></anvil-component>
+            <anvil-component type="Button" name="request_button" prop:text="Put it on the board" prop:role='["btn", "btn-primary", "ic-send"]'></anvil-component>
+          </div>
+        </div>
+        <div class="ui-card ui-stack">
+          <h3>Are you a seamstress or tailor?</h3>
+          <p class="muted small">Join the guild: the shop checks every application. Verified members get a badge on their quotes, and requests near them that match what they make are shown to them first. You can quote on the board with any account.</p>
+          <anvil-component type="Label" name="guild_status" prop:role='["msg-note"]'></anvil-component>
+          <div class="ui-stack tl-form">
+            <div class="two">
+              <label class="ui-field"><span>Your name or shop</span><anvil-component type="TextBox" name="g_name"></anvil-component></label>
+              <label class="ui-field"><span>Email</span><anvil-component type="TextBox" name="g_email" prop:type="email"></anvil-component></label>
+            </div>
+            <div class="two">
+              <label class="ui-field"><span>City</span><anvil-component type="TextBox" name="g_city"></anvil-component></label>
+              <label class="ui-field"><span>Experience</span><anvil-component type="DropDown" name="g_exp"></anvil-component></label>
+            </div>
+            <div class="st-opt"><label>What you make</label><anvil-component type="RepeatingPanel" name="g_kinds" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+            <label class="ui-field"><span>What you make best</span><anvil-component type="TextBox" name="g_spec" prop:placeholder="Waistcoats, trousers, bridal, alterations…"></anvil-component></label>
+            <label class="ui-field"><span>A note for the shop <em>(optional)</em></span><anvil-component type="TextArea" name="g_note" prop:height="70"></anvil-component></label>
+            <anvil-component type="CheckBox" name="g_remote" prop:text="I take work from further away (fittings by post or video)"></anvil-component>
+            <anvil-component type="Button" name="guild_button" prop:text="Apply to the guild" prop:role='["btn", "ic-needle"]'></anvil-component>
+          </div>
+        </div>
+      </div>
+
+      <div anvil:name="mine_part" class="tl-noprint">
+        <div class="my-sec-title"><h2>Your requests</h2></div>
+        <anvil-component type="RepeatingPanel" name="req_panel" prop:item_template="Make_Your_Own_Clothes.Items.MyRequestRow" prop:role='["ui-list"]'></anvil-component>
+      </div>
+      <div anvil:name="quotes_part" class="tl-noprint">
+        <div class="my-sec-title"><h2>Quotes you sent</h2></div>
+        <anvil-component type="RepeatingPanel" name="quote_panel" prop:item_template="Make_Your_Own_Clothes.Items.MyQuoteRow" prop:role='["ui-list"]'></anvil-component>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

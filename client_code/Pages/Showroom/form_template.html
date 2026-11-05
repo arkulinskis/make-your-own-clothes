@@ -1,0 +1,12 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="my-head">
+        <div><div class="eyebrow">The showroom</div><h1>Made by members</h1><p>Garments drafted, redrawn and sewn here, hung for everyone to see. Tip your hat to the ones you admire, or copy one to make it your own.</p></div>
+        <anvil-component type="RepeatingPanel" name="sort_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component>
+      </div>
+      <div class="sr-grid"><anvil-component type="RepeatingPanel" name="panel" prop:item_template="Make_Your_Own_Clothes.Items.ShowroomCard" prop:role='["contents"]'></anvil-component></div>
+      <div class="ui-empty" anvil:name="empty"><i class="ic ic-hanger"></i><h3>The rails are empty</h3><p>Share a garment from the Studio to hang it here.</p></div>
+    </div>
+  </anvil-block>
+</anvil-form>

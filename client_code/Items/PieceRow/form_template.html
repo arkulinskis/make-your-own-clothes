@@ -1,0 +1,16 @@
+<div class="st-piece-host">
+  <div class="st-piece" anvil:name="box">
+    <div class="h"><anvil-component type="Label" name="name_label" prop:role='["strong"]'></anvil-component><anvil-component type="Label" name="cut_label" prop:role='["fine-print"]'></anvil-component></div>
+    <div class="small muted"><anvil-component type="Label" name="facts" prop:role='["inline"]'></anvil-component> <anvil-component type="Label" name="badge" prop:role='["badge", "badge-warn"]'></anvil-component></div>
+    <anvil-component type="Label" name="note" prop:role='["fine-print"]'></anvil-component>
+    <div class="ui-row">
+      <anvil-component type="Button" name="select_button" prop:text="Select" prop:role='["btn", "btn-sm", "ic-target"]'></anvil-component>
+      <anvil-component type="Button" name="reset_button" prop:text="Back to the draft" prop:role='["btn", "btn-sm", "ic-refresh"]'></anvil-component>
+      <anvil-component type="Button" name="remove_button" prop:text="Remove" prop:role='["btn", "btn-sm", "btn-danger", "ic-trash"]'></anvil-component>
+    </div>
+    <div anvil:name="own_part" class="st-piece-own">
+      <label class="ui-field small"><span>In 3D</span><anvil-component type="DropDown" name="place_drop"></anvil-component></label>
+      <anvil-component type="CheckBox" name="pair_check" prop:text="Cut 2 as a mirrored pair"></anvil-component>
+    </div>
+  </div>
+</div>

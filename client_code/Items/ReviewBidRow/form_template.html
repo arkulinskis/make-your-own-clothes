@@ -1,0 +1,17 @@
+<div class="rv-host">
+  <div class="ui-item rv-item">
+    <div class="meta"><span class="ui-badge brand">Quote</span>
+      <anvil-component type="Label" name="who" prop:role='["strong", "inline"]'></anvil-component>
+      <anvil-component type="Label" name="verified" prop:role='["badge", "badge-good"]' prop:text="Guild verified"></anvil-component>
+      <a anvil:name="email_link" href="#"><anvil-component type="Label" name="email" prop:role='["inline"]'></anvil-component></a>
+      <anvil-component type="Label" name="when" prop:role='["inline", "fine-print"]'></anvil-component></div>
+    <p class="rv-for">For <a anvil:name="req_link" href="#requests"><anvil-component type="Label" name="req" prop:role='["inline"]'></anvil-component></a> · <anvil-component type="Label" name="terms" prop:role='["inline", "strong"]'></anvil-component></p>
+    <anvil-component type="Label" name="message" prop:role='["msg-body"]'></anvil-component>
+    <label class="ui-field"><span>Private note (only admins see it)</span><anvil-component type="TextArea" name="note_box" prop:height="54"></anvil-component></label>
+    <div class="ui-row" anvil:name="acts">
+      <anvil-component type="Button" name="approve_button" prop:text="Pass it on to the member" prop:role='["btn", "btn-sm", "btn-primary", "ic-check"]'></anvil-component>
+      <anvil-component type="Button" name="reject_button" prop:text="Don't pass it on" prop:role='["btn", "btn-sm", "btn-danger", "ic-x"]'></anvil-component>
+    </div>
+    <anvil-component type="Label" name="status" prop:role='["badge"]'></anvil-component>
+  </div>
+</div>

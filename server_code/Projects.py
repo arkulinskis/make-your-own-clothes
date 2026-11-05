@@ -16,10 +16,10 @@ from . import DemoData
 
 MAX_BYTES = 300000
 PID_RE = re.compile(r"^p[0-9a-f]{8,40}$")
-PATTERNS = {"tee", "waistcoat", "aline", "circle", "trousers", "shift", "kimono", "tote", "block", "custom"}
+PATTERNS = {"tee", "shirt", "waistcoat", "jacket", "aline", "circle", "trousers", "shift", "kimono", "tote", "block", "custom"}
 STATUSES = {"drafting", "cutting", "sewing", "done"}
 KEYS = ["pid", "code", "title", "pattern", "figure", "size", "m", "opts", "edits", "extraSeams", "places", "fabric", "cloth", "sa",
-        "progress", "status", "notes", "custom", "created", "updated", "layout"]
+        "progress", "status", "notes", "custom", "created", "updated", "layout", "fit"]
 
 
 def _clean(p):
@@ -37,6 +37,7 @@ def _clean(p):
     data["status"] = p.get("status") if p.get("status") in STATUSES else "drafting"
     data["notes"] = C.text(p.get("notes"), 4000, multiline=True)
     data["fabric"] = C.text(p.get("fabric"), 40)
+    data["fit"] = _clean_fit(p.get("fit"))
     try:
         size = len(json.dumps(data))
     except (TypeError, ValueError):
@@ -44,6 +45,32 @@ def _clean(p):
     if size > MAX_BYTES:
         return None, "This project is too large to save (traced photos stay in your browser). Try simplifying imported pieces."
     return data, None
+
+
+def _clean_fit(fit):
+    """Fit changes typed from a test garment (theme/assets/my-fit.js): at most 40, plain values only."""
+    out = []
+    for f in (fit if isinstance(fit, list) else [])[:40]:
+        if not isinstance(f, dict) or not isinstance(f.get("effect"), dict):
+            continue
+        eff, clean = f["effect"], {}
+        if isinstance(eff.get("m"), dict):
+            m = {k: float(v) for k, v in eff["m"].items() if k in FIT_KEYS and isinstance(v, (int, float)) and abs(v) <= 60}
+            if m:
+                clean["m"] = m
+        if isinstance(eff.get("hem"), dict) and eff["hem"].get("part") in ("body", "sleeve", "leg"):
+            cm = eff["hem"].get("cm")
+            if isinstance(cm, (int, float)) and abs(cm) <= 30:
+                clean["hem"] = {"part": eff["hem"]["part"], "cm": float(cm)}
+        if not clean:
+            continue
+        out.append({"id": C.text(f.get("id"), 30), "text": C.text(f.get("text"), 200), "explain": C.text(f.get("explain"), 300),
+                    "kind": C.text(f.get("kind"), 10), "where": C.text(f.get("where"), 20), "on": f.get("on") is not False,
+                    "cm": float(f["cm"]) if isinstance(f.get("cm"), (int, float)) else 0.0, "effect": clean})
+    return out
+
+
+FIT_KEYS = {"chest", "waist", "hip", "neck", "shoulder", "bicep", "wrist", "thigh", "rise", "backLen"}
 
 
 # chest / bust per standard size (same table as the browser's MY.SIZES), to stand in for private measurements
@@ -66,6 +93,7 @@ def public_data(data):
         d["size"] = SIZE_NAMES[i]
         d["sized_for_owner"] = True
     d["m"] = None
+    d["fit"] = []  # fit changes from the owner's test garment say something about their body too
     return d
 
 

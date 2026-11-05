@@ -1,0 +1,30 @@
+<div class="ui ip-dialog">
+  <h2 class="dlg-h">Bring in a pattern</h2>
+  <div class="ui-seg ip-seg" role="group" aria-label="What to bring in">
+    <button type="button" anvil:name="seg_svg" anvil:on-dom:click="self.seg_click" data-kind="svg">An SVG file</button>
+    <button type="button" anvil:name="seg_photo" anvil:on-dom:click="self.seg_click" data-kind="photo">Trace a photo</button>
+  </div>
+  <div anvil:name="svg_part" class="ui-stack">
+    <p class="muted">Export a pattern as SVG from FreeSewing, Seamly2D, Valentina or Inkscape. We read every closed outline, in real centimetres from the file's units.</p>
+    <label class="ui-field"><span>The SVG file</span><input type="file" accept=".svg,image/svg+xml" anvil:name="svg_input" anvil:on-dom:change="self.svg_change"></label>
+    <anvil-component type="Label" name="svg_msg" prop:visible="false"></anvil-component>
+    <div anvil:name="shapes_part">
+      <p class="small muted">Inner lines (seam lines, marks) are unticked. Click an outline to choose it.</p>
+      <div class="ip-shapes"><anvil-component type="RepeatingPanel" name="shapes_panel" prop:item_template="Make_Your_Own_Clothes.Items.ShapeChoice" prop:role='["contents"]'></anvil-component></div>
+      <anvil-component type="CheckBox" name="has_sa" prop:text="These outlines are cutting lines (they already include seam allowance)" prop:checked="true"></anvil-component>
+      <div class="ui-row end"><anvil-component type="Button" name="add_button" prop:text="Add to the cutting table" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component></div>
+    </div>
+  </div>
+  <div anvil:name="photo_part" class="ui-stack">
+    <p class="muted">Photograph a paper pattern flat from straight above, with a ruler or a sheet of A4 paper beside it. Load it, then tell us how big the photo is in real life. The photo stays in this browser.</p>
+    <label class="ui-field"><span>The photo</span><input type="file" accept="image/*" anvil:name="photo_input" anvil:on-dom:change="self.photo_change"></label>
+    <div class="ui-row" anvil:name="had_photo"><span class="small">A photo is already on the table.</span><anvil-component type="Button" name="unphoto_button" prop:text="Remove it" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component></div>
+    <div anvil:name="cal_part" class="ui-stack">
+      <p class="small"><b>Calibrate.</b> How wide is the whole photo in real life? (Measure something in it: an A4 sheet is 21 cm wide.)</p>
+      <div class="ui-row"><label class="ui-field ip-w"><span>Width across, in cm</span><anvil-component type="TextBox" name="real_w" prop:type="number"></anvil-component></label>
+        <anvil-component type="Button" name="use_button" prop:text="Put it on the table" prop:role='["btn", "btn-primary"]'></anvil-component></div>
+      <img alt="Your photo" class="ip-preview" anvil:name="preview">
+    </div>
+  </div>
+  <div class="ui-row end"><anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component></div>
+</div>

@@ -1,0 +1,14 @@
+<div class="ui fb-detail">
+  <anvil-component type="Make_Your_Own_Clothes.Components.Html" name="swatch"></anvil-component>
+  <anvil-component type="Label" name="eyebrow" prop:role='["eyebrow-label"]'></anvil-component>
+  <anvil-component type="Label" name="title" prop:role='["dlg-title"]'></anvil-component>
+  <anvil-component type="Label" name="aka" prop:role='["muted-p"]'></anvil-component>
+  <anvil-component type="Label" name="fact"></anvil-component>
+  <anvil-component type="RepeatingPanel" name="props" prop:item_template="Make_Your_Own_Clothes.Items.PropRow" prop:role='["fb-props"]'></anvil-component>
+  <h4 class="fb-h4">Sewing tips</h4>
+  <anvil-component type="RepeatingPanel" name="tips" prop:item_template="Make_Your_Own_Clothes.Items.Bullet"></anvil-component>
+  <anvil-component type="Label" name="fibre" prop:role='["fine-print"]'></anvil-component>
+  <div anvil:name="pats_part"><h4 class="fb-h4">Patterns that suit it</h4>
+    <anvil-component type="RepeatingPanel" name="pats" prop:item_template="Make_Your_Own_Clothes.Items.BeginChip" prop:role='["chips"]'></anvil-component></div>
+  <div class="ui-row end"><anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component></div>
+</div>

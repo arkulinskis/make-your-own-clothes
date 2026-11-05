@@ -1,0 +1,195 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap st-wrap">
+      <div anvil:name="chooser_part">
+        <div class="my-head"><div><div class="eyebrow">The studio</div><h1>Which garment today?</h1><p>Open one of your files, or begin a new one from the pattern archive.</p></div>
+          <a class="ui-btn primary" href="#patterns"><i class="ic ic-scissors"></i>Begin from a pattern</a></div>
+        <div class="st-choose"><anvil-component type="RepeatingPanel" name="choose_panel" prop:item_template="Make_Your_Own_Clothes.Items.SmallCard" prop:role='["contents"]'></anvil-component></div>
+        <div class="ui-empty" anvil:name="choose_empty"><i class="ic ic-scissors"></i><h3>Your cutting table is clear</h3><p>Pick a pattern from the archive to begin.</p><a class="ui-btn primary" href="#patterns">Open the archive</a></div>
+      </div>
+
+      <div class="ui-empty" anvil:name="missing_part"><i class="ic ic-lock"></i><h3>That file isn't on the table</h3>
+        <anvil-component type="Label" name="missing_label"></anvil-component><a class="ui-btn" href="#studio">Open the studio</a></div>
+
+      <div anvil:name="main_part">
+        <div class="st-top">
+          <div class="st-id">
+            <anvil-component type="Label" name="agent_label" prop:role='["my-code"]'></anvil-component>
+            <anvil-component type="TextBox" name="code_box" prop:role='["st-code"]'></anvil-component>
+            <div class="sub"><anvil-component type="Label" name="sub_label" prop:role='["inline"]'></anvil-component> · <anvil-component type="Label" name="save_label" prop:role='["inline", "st-save"]'></anvil-component>
+              <anvil-component type="Label" name="fit_badge" prop:role='["badge", "badge-brand"]'></anvil-component></div>
+          </div>
+          <div class="acts">
+            <anvil-component type="DropDown" name="status_drop" prop:role='["st-status-drop"]'></anvil-component>
+            <a class="ui-btn" anvil:name="book_link" href="#book"><i class="ic ic-book"></i>Making book</a>
+            <a class="ui-btn" anvil:name="tailor_link" href="#tailor"><i class="ic ic-send"></i>Send to a seamstress</a>
+            <anvil-component type="Button" name="share_button" prop:role='["btn", "ic-hanger"]'></anvil-component>
+          </div>
+        </div>
+        <div class="ui-note st-banner" anvil:name="banner">
+          <i class="ic ic-eye"></i><anvil-component type="Label" name="banner_label" prop:role='["inline"]'></anvil-component>
+          <anvil-component type="Button" name="copy_button" prop:text="Make my copy" prop:role='["btn", "btn-sm", "btn-primary", "ic-copy"]'></anvil-component>
+        </div>
+        <nav class="ui-tabs" aria-label="Studio">
+          <a href="#studio" anvil:name="tab_draft"><i class="ic ic-pen"></i>Cutting table</a>
+          <a href="#studio" anvil:name="tab_fit"><i class="ic ic-cube"></i>Fitting room</a>
+          <a href="#studio" anvil:name="tab_lay"><i class="ic ic-layers"></i>Lay plan &amp; print</a>
+          <a href="#studio" anvil:name="tab_info"><i class="ic ic-info"></i>Pattern facts</a>
+        </nav>
+
+        <!-- the cutting table + its side panel -->
+        <div class="st-draft" anvil:name="draft_part">
+          <anvil-component type="Make_Your_Own_Clothes.Components.CuttingTable" name="table"></anvil-component>
+          <div class="ui-card st-panel">
+            <div class="ui-tabs st-ptabs" role="group" aria-label="Panel">
+              <button type="button" anvil:name="p_fit" data-ptab="fit" anvil:on-dom:click="self.ptab_click">Fit</button>
+              <button type="button" anvil:name="p_alter" data-ptab="alter" anvil:on-dom:click="self.ptab_click">Fit changes</button>
+              <button type="button" anvil:name="p_pieces" data-ptab="pieces" anvil:on-dom:click="self.ptab_click">Pieces</button>
+              <button type="button" anvil:name="p_seams" data-ptab="seams" anvil:on-dom:click="self.ptab_click">Seams</button>
+              <button type="button" anvil:name="p_cloth" data-ptab="cloth" anvil:on-dom:click="self.ptab_click">Cloth</button>
+            </div>
+            <div class="pb">
+              <div anvil:name="fit_panel" class="ui-stack">
+                <div anvil:name="size_part" class="st-opt"><label>Measurements</label>
+                  <anvil-component type="RepeatingPanel" name="size_chips" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component>
+                  <p class="ui-hint"><anvil-component type="Label" name="size_hint" prop:role='["inline"]'></anvil-component> <a href="#measure">Edit the dossier</a>
+                    <anvil-component type="Button" name="refresh_m" prop:text="use the latest dossier" prop:role='["link-btn"]'></anvil-component></p></div>
+                <div anvil:name="figure_part" class="st-opt"><label>Figure</label>
+                  <anvil-component type="RepeatingPanel" name="figure_chips" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+                <anvil-component type="RepeatingPanel" name="opt_panel" prop:item_template="Make_Your_Own_Clothes.Items.OptRow" prop:role='["ui-stack"]'></anvil-component>
+                <div class="st-opt"><label><anvil-component type="Label" name="sa_label" prop:role='["inline"]'></anvil-component></label>
+                  <anvil-component type="RepeatingPanel" name="sa_chips" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+                <anvil-component type="CheckBox" name="nest_check" prop:text="Show the size nest (XS to XXL)"></anvil-component>
+                <anvil-component type="RepeatingPanel" name="info_panel" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["my-kv", "small"]'></anvil-component>
+                <anvil-component type="Button" name="reset_all" prop:role='["btn", "btn-sm", "btn-danger", "ic-refresh"]'></anvil-component>
+              </div>
+
+              <div anvil:name="alter_panel" class="ui-stack">
+                <div class="fc-intro"><b>Fit changes from your test garment</b>
+                  <p class="small muted">Sewn a toile and pinned it? Type what it needed, the way a tailor would chalk it, and the pattern redrafts. Your hand edits stay.</p></div>
+                <label class="ui-field"><span>What did it need?</span>
+                  <anvil-component type="TextArea" name="fit_box" prop:placeholder="e.g. Take in 1 cm at the side, let out the hips half an inch, shorten the sleeves 2 cm" prop:height="96"></anvil-component></label>
+                <div class="ui-row"><anvil-component type="Button" name="read_button" prop:text="Read it" prop:role='["btn", "ic-search"]'></anvil-component>
+                  <anvil-component type="Button" name="apply_button" prop:text="Redraft with these" prop:role='["btn", "btn-primary", "ic-refresh"]'></anvil-component></div>
+                <anvil-component type="RepeatingPanel" name="preview_panel" prop:item_template="Make_Your_Own_Clothes.Items.FitChangeRow" prop:role='["fc-list"]'></anvil-component>
+                <div anvil:name="applied_part" class="ui-stack">
+                  <div class="fc-head"><b>Redrafted in</b><anvil-component type="Label" name="applied_count" prop:role='["fine-print"]'></anvil-component></div>
+                  <anvil-component type="RepeatingPanel" name="applied_panel" prop:item_template="Make_Your_Own_Clothes.Items.FitChangeRow" prop:role='["fc-list"]'></anvil-component>
+                </div>
+                <p class="ui-hint">How amounts are read: "at the side" moves each side seam that much on both pieces (1 cm = 4 cm round the body); "2 cm in total" or "the waist 2 cm" means round the body; shoulders are per shoulder; lengths move the hems of the pieces named. Each change says how it was read before anything is redrafted.</p>
+              </div>
+
+              <div anvil:name="pieces_panel" class="ui-stack">
+                <div class="ui-row"><anvil-component type="Button" name="import_svg" prop:text="Import an SVG" prop:role='["btn", "btn-sm", "ic-upload"]'></anvil-component>
+                  <anvil-component type="Button" name="import_photo" prop:text="Trace a photo" prop:role='["btn", "btn-sm", "ic-camera"]'></anvil-component></div>
+                <anvil-component type="RepeatingPanel" name="piece_panel" prop:item_template="Make_Your_Own_Clothes.Items.PieceRow" prop:role='["ui-stack"]'></anvil-component>
+                <div class="ui-empty small" anvil:name="no_pieces">No pieces yet. Use Import or the trace tool to add some.</div>
+              </div>
+
+              <div anvil:name="seams_panel" class="ui-stack">
+                <div class="ui-note" anvil:name="sew_note">
+                  <anvil-component type="Label" name="sew_text"></anvil-component>
+                  <div class="ui-row" anvil:name="sew_row"><anvil-component type="TextBox" name="seam_name" prop:placeholder="Seam name, e.g. Side seam"></anvil-component>
+                    <anvil-component type="Button" name="sew_button" prop:text="Sew these" prop:role='["btn", "btn-sm", "btn-primary", "ic-needle"]'></anvil-component></div>
+                  <anvil-component type="Button" name="sew_clear" prop:text="Clear the selection" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+                </div>
+                <anvil-component type="RepeatingPanel" name="seam_panel" prop:item_template="Make_Your_Own_Clothes.Items.SeamRow" prop:role='["ui-stack", "st-seams"]'></anvil-component>
+                <div class="ui-empty small" anvil:name="no_seams">No seams yet. Use the needle tool to sew two edges together.</div>
+                <p class="ui-hint">Truing: both sides of a seam should be the same length (a sleeve cap is a little longer: that is its ease). Click a seam to see it on the table.</p>
+              </div>
+
+              <div anvil:name="cloth_panel" class="ui-stack">
+                <label class="ui-field"><span>Cloth</span><anvil-component type="DropDown" name="fabric_drop"></anvil-component></label>
+                <p class="ui-hint"><anvil-component type="Label" name="fabric_hint" prop:role='["inline"]'></anvil-component> · drape <anvil-component type="Make_Your_Own_Clothes.Components.Html" name="drape_meter"></anvil-component> · <a href="#fabrics" anvil:name="guide_link">read the guide</a>
+                  <anvil-component type="Label" name="fabric_warn" prop:role='["strong"]' prop:text="Not one of the suggested cloths for this pattern."></anvil-component></p>
+                <div class="ui-row"><anvil-component type="Make_Your_Own_Clothes.Components.Html" name="swatch"></anvil-component>
+                  <label class="ui-field st-weave"><span>Look</span><anvil-component type="DropDown" name="weave_drop"></anvil-component></label></div>
+                <div class="ui-row">
+                  <label class="small st-color">Colour <input type="color" anvil:name="color_in" anvil:on-dom:change="self.color_change"></label>
+                  <label class="small st-color">Stripe / check <input type="color" anvil:name="accent_in" anvil:on-dom:change="self.accent_change"></label>
+                  <anvil-component type="Button" name="looks_button" prop:text="Reset to the cloth's look" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+                </div>
+                <p class="ui-hint">The 3D fitting uses this cloth's drape and stretch, and the making book its needle, stitch and pressing settings.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- the fitting room -->
+        <div class="st-fitwrap" anvil:name="fit_part">
+          <div class="st-fit3d"><anvil-component type="Make_Your_Own_Clothes.Components.Fitting" name="fit"></anvil-component></div>
+          <div class="ui-card st-fitside">
+            <div class="ui-row">
+              <anvil-component type="Button" name="sew_all" prop:text="Sew it all" prop:role='["btn", "btn-primary", "ic-needle"]'></anvil-component>
+              <anvil-component type="Button" name="step_back" prop:text="Previous step" prop:role='["btn", "btn-icon", "ic-back"]'></anvil-component>
+              <anvil-component type="Button" name="step_next" prop:text="Next step" prop:role='["btn", "btn-icon", "ic-arrow"]'></anvil-component>
+            </div>
+            <div class="ui-seg" role="group" aria-label="View">
+              <button type="button" anvil:name="v_front" data-view="front" anvil:on-dom:click="self.view_click">Front</button>
+              <button type="button" anvil:name="v_side" data-view="side" anvil:on-dom:click="self.view_click">Side</button>
+              <button type="button" anvil:name="v_back" data-view="back" anvil:on-dom:click="self.view_click">Back</button>
+            </div>
+            <div class="ui-row small">
+              <anvil-component type="CheckBox" name="t_body" prop:text="Mannequin" prop:checked="true"></anvil-component>
+              <anvil-component type="CheckBox" name="t_ease" prop:text="Ease map"></anvil-component>
+              <anvil-component type="CheckBox" name="t_spin" prop:text="Turn"></anvil-component>
+              <anvil-component type="CheckBox" name="t_wind" prop:text="A breeze"></anvil-component>
+            </div>
+            <anvil-component type="RepeatingPanel" name="step_panel" prop:item_template="Make_Your_Own_Clothes.Items.StepButton" prop:role='["st-steps"]'></anvil-component>
+            <anvil-component type="Label" name="step_text" prop:role='["fine-print"]'></anvil-component>
+          </div>
+        </div>
+
+        <!-- lay plan & printing -->
+        <div class="st-laygrid" anvil:name="lay_part">
+          <div class="ui-card st-lay"><anvil-component type="Make_Your_Own_Clothes.Components.Html" name="lay_svg"></anvil-component></div>
+          <div class="ui-stack">
+            <div class="ui-card"><div class="eyebrow">Buy</div>
+              <anvil-component type="Label" name="buy_big" prop:role='["st-big"]'></anvil-component>
+              <anvil-component type="Label" name="buy_note" prop:role='["fine-print"]'></anvil-component>
+              <anvil-component type="Label" name="lay_error" prop:role='["msg-error"]' prop:text="A piece is wider than this cloth: choose a wider cloth or the single-layer layout."></anvil-component></div>
+            <div class="ui-card ui-stack">
+              <div class="st-opt"><label>Cloth width</label><anvil-component type="RepeatingPanel" name="lw_chips" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+              <div class="st-opt"><label>Layout</label><anvil-component type="RepeatingPanel" name="lm_chips" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+              <anvil-component type="Label" name="lay_note" prop:role='["fine-print"]'></anvil-component>
+            </div>
+            <div class="ui-card ui-stack"><div class="eyebrow">Print the pattern</div>
+              <div class="st-opt"><label>Paper</label><anvil-component type="RepeatingPanel" name="pp_chips" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+              <anvil-component type="Label" name="print_note" prop:role='["fine-print"]'></anvil-component>
+              <div class="ui-row">
+                <anvil-component type="Button" name="print_button" prop:text="Print" prop:role='["btn", "btn-primary", "ic-print"]'></anvil-component>
+                <anvil-component type="Button" name="svg_button" prop:text="SVG for a copy shop" prop:role='["btn", "ic-download"]'></anvil-component>
+                <anvil-component type="Button" name="proj_button" prop:text="Projector" prop:role='["btn", "ic-eye"]'></anvil-component>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- pattern facts -->
+        <div anvil:name="info_part">
+          <div class="ui-grid two">
+            <div class="ui-card ui-stack">
+              <anvil-component type="Label" name="pat_name" prop:role='["card-h3"]'></anvil-component>
+              <anvil-component type="Label" name="pat_about" prop:role='["muted-p"]'></anvil-component>
+              <div class="my-kv" anvil:name="pat_kv">
+                <span class="kv-k-s">Difficulty</span><anvil-component type="Make_Your_Own_Clothes.Components.Html" name="pat_meter"></anvil-component>
+                <span class="kv-k-s">Time</span><anvil-component type="Label" name="pat_time" prop:role='["kv-v"]'></anvil-component>
+                <span class="kv-k-s">Notions</span><anvil-component type="Label" name="pat_notions" prop:role='["kv-v"]'></anvil-component>
+                <span class="kv-k-s">Suggested cloth</span><anvil-component type="Label" name="pat_cloths" prop:role='["kv-v"]'></anvil-component>
+              </div>
+              <anvil-component type="Label" name="pat_refs" prop:role='["fine-print"]'></anvil-component>
+            </div>
+            <div class="ui-card ui-stack">
+              <h3>The maths</h3>
+              <anvil-component type="RepeatingPanel" name="maths_panel" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["my-kv"]'></anvil-component>
+              <hr class="my-rule"><h4>Measurements used</h4>
+              <anvil-component type="RepeatingPanel" name="used_panel" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["my-kv", "small"]'></anvil-component>
+            </div>
+          </div>
+          <div class="ui-card st-notes"><h3>Notes</h3>
+            <label class="ui-field"><span class="ui-sr">Your notes</span><anvil-component type="TextArea" name="notes_box" prop:placeholder="Fitting notes, changes, where you bought the cloth…" prop:height="120"></anvil-component></label></div>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

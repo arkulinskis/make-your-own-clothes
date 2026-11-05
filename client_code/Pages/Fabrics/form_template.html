@@ -1,0 +1,87 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="my-head"><div><div class="eyebrow">The cloth room</div><h1>A field guide to fabric</h1>
+        <p>38 cloths and 14 fibres, with the numbers a sewist needs: weight, drape, shrinkage, needle, stitch, seam finish and the iron setting. Checked against the standards and guides listed under Sources.</p></div></div>
+      <nav class="ui-tabs" aria-label="The cloth room">
+        <a href="#fabrics/cloths" anvil:name="t_cloths"><i class="ic ic-spool"></i>Cloths</a>
+        <a href="#fabrics/fibres" anvil:name="t_fibres"><i class="ic ic-flame"></i>Fibres</a>
+        <a href="#fabrics/weaves" anvil:name="t_weaves"><i class="ic ic-grid"></i>Weaves &amp; knits</a>
+        <a href="#fabrics/care" anvil:name="t_care"><i class="ic ic-iron"></i>Care &amp; pressing</a>
+        <a href="#fabrics/tools" anvil:name="t_tools"><i class="ic ic-calc"></i>Calculators</a>
+        <a href="#fabrics/glossary" anvil:name="t_glossary"><i class="ic ic-book"></i>Glossary</a>
+        <a href="#fabrics/sources" anvil:name="t_sources"><i class="ic ic-external"></i>Sources</a>
+      </nav>
+
+      <div anvil:name="cloths_part">
+        <div class="fb-tools">
+          <label class="ui-field fb-search"><span class="ui-sr">Search cloths</span><anvil-component type="TextBox" name="search_box" prop:placeholder="Search: linen, shirts, drape…" prop:type="search"></anvil-component></label>
+          <div class="fb-filters"><anvil-component type="RepeatingPanel" name="filter_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+        </div>
+        <div class="fb-grid"><anvil-component type="RepeatingPanel" name="cloth_panel" prop:item_template="Make_Your_Own_Clothes.Items.FabricCard" prop:role='["contents"]'></anvil-component></div>
+        <div class="ui-empty" anvil:name="no_cloth"><i class="ic ic-search"></i><h3>No cloth matches</h3><p>Try another word or filter.</p></div>
+      </div>
+
+      <div anvil:name="fibres_part">
+        <div class="ui-grid two"><anvil-component type="RepeatingPanel" name="fibre_panel" prop:item_template="Make_Your_Own_Clothes.Items.InfoCard" prop:role='["contents"]'></anvil-component></div>
+        <p class="small muted fb-foot"><b>Regain</b> is how much water vapour a fibre holds at standard conditions, as a share of its dry weight: high regain feels cool and absorbs sweat; low regain dries fast but feels clammy. <b>The burn test</b>: hold a small snippet in tweezers over a sink, away from anything flammable. Blends give mixed results; it tells you the family, not the exact fibre.</p>
+      </div>
+
+      <div anvil:name="weaves_part">
+        <div class="ui-grid two"><anvil-component type="RepeatingPanel" name="weave_panel" prop:item_template="Make_Your_Own_Clothes.Items.InfoCard" prop:role='["contents"]'></anvil-component></div>
+        <p class="small muted fb-foot">In the weave drawings, green squares are where the lengthwise warp thread is on top; brass is the crosswise weft.</p>
+      </div>
+
+      <div anvil:name="care_part">
+        <h3>The iron: ISO 3758 dots</h3>
+        <div class="fb-dots"><anvil-component type="RepeatingPanel" name="iron_panel" prop:item_template="Make_Your_Own_Clothes.Items.InfoCard" prop:role='["contents"]'></anvil-component></div>
+        <p class="small muted">Blends: use the setting of the most delicate fibre in them. A crossed-out iron means don't iron at all.</p>
+        <div class="ui-grid two fb-gap">
+          <div class="ui-card"><h3>Pressing like a tailor</h3><ul>
+            <li>Press, don't iron: lift and lower; sliding stretches seams.</li><li>Press every seam flat as sewn, then open, before it is crossed by another.</li>
+            <li>Use a press cloth (silk organza is see-through and takes the heat) on wool, dark colours and anything that can shine.</li>
+            <li>Curves go over a tailor's ham; sleeves over a sleeve board; wool gets steam then a clapper, held until cool.</li><li>Velvet and corduroy: steam from the back over a towel or needle board.</li></ul></div>
+          <div class="ui-card"><h3>Care symbols</h3><anvil-component type="RepeatingPanel" name="care_panel" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["my-kv", "small"]'></anvil-component></div>
+        </div>
+        <div class="ui-grid two fb-gap">
+          <div class="ui-card"><h3>Machine needles</h3><anvil-component type="RepeatingPanel" name="needle_panel" prop:item_template="Make_Your_Own_Clothes.Items.InfoCard" prop:role='["ui-stack"]'></anvil-component>
+            <p class="small muted">Bigger number = thicker needle. Start every project with a new one.</p></div>
+          <div class="ui-card"><h3>Stitch length</h3><anvil-component type="RepeatingPanel" name="stitch_panel" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["my-kv", "small"]'></anvil-component></div>
+        </div>
+      </div>
+
+      <div anvil:name="tools_part">
+        <div class="ui-grid two">
+          <div class="ui-card fb-calc"><h3>Knit stretch %</h3><p class="small muted">Mark 10 cm across the knit, stretch it firmly (not to its limit) against a ruler.</p>
+            <label class="ui-field"><span>Stretched length, cm</span><anvil-component type="TextBox" name="c_st" prop:type="number" prop:text="13"></anvil-component></label>
+            <div class="out"><anvil-component type="Label" name="o_st" prop:role='["inline"]'></anvil-component> <anvil-component type="Label" name="n_st" prop:role='["inline", "fine-print"]'></anvil-component></div></div>
+          <div class="ui-card fb-calc"><h3>Cloth weight converter</h3>
+            <label class="ui-field"><span>Grams per m²</span><anvil-component type="TextBox" name="c_gsm" prop:type="number" prop:text="270"></anvil-component></label>
+            <div class="out"><anvil-component type="Label" name="o_gsm" prop:role='["inline"]'></anvil-component> <anvil-component type="Label" name="n_gsm" prop:role='["inline", "fine-print"]'></anvil-component></div>
+            <p class="small muted">Suiting is often sold per linear yard of 150 cm wide cloth: that is a bigger piece than a square yard.</p></div>
+          <div class="ui-card fb-calc"><h3>Shrinkage: how much to buy</h3>
+            <label class="ui-field"><span>The pattern needs, in metres</span><anvil-component type="TextBox" name="c_need" prop:type="number" prop:text="2"></anvil-component></label>
+            <label class="ui-field"><span>Cloth</span><anvil-component type="DropDown" name="c_sk"></anvil-component></label>
+            <div class="out"><anvil-component type="Label" name="o_sk" prop:role='["inline"]'></anvil-component> <anvil-component type="Label" name="n_sk" prop:role='["inline", "fine-print"]'></anvil-component></div></div>
+          <div class="ui-card fb-calc"><h3>Wool "Super" numbers</h3>
+            <label class="ui-field"><span>Super (80 to 250)</span><anvil-component type="TextBox" name="c_sup" prop:type="number" prop:text="120"></anvil-component></label>
+            <div class="out"><anvil-component type="Label" name="o_sup" prop:role='["inline"]'></anvil-component> <anvil-component type="Label" name="n_sup" prop:role='["inline", "fine-print"]'></anvil-component></div>
+            <p class="small muted">The number is a fineness grade set by the wool trade (IWTO, ISO 18103) and written into US labelling law: each step of 10 is half a micron finer. Finer is softer and more delicate; Super 100s–130s suit everyday suits.</p></div>
+          <div class="ui-card fb-calc"><h3>Suiting weight by season</h3>
+            <div class="my-kv small"><span>Tropical</span><b>6.5–8.5 oz · high summer</b><span>Year-round</span><b>9–10 oz · most of the year</b><span>Regular</span><b>11–13 oz · autumn, winter</b><span>Heavy</span><b>14–16+ oz · tweeds, coats</b></div>
+            <p class="small muted">Ounces per linear yard of 150 cm wide cloth.</p></div>
+        </div>
+      </div>
+
+      <div anvil:name="glossary_part">
+        <div class="ui-grid two"><anvil-component type="RepeatingPanel" name="glossary_panel" prop:item_template="Make_Your_Own_Clothes.Items.InfoCard" prop:role='["contents"]'></anvil-component></div>
+      </div>
+
+      <div anvil:name="sources_part">
+        <div class="ui-card"><p>Numbers in the Cloth Room are typical ranges from these sources (read in October 2026). Mills and finishes vary, so test a scrap before you trust any number with your good cloth.</p>
+          <anvil-component type="RepeatingPanel" name="source_panel" prop:item_template="Make_Your_Own_Clothes.Items.SourceLink" prop:role='["src-list"]'></anvil-component>
+          <p class="small muted">Pattern sources: <a href="https://freesewing.eu/designs" target="_blank" rel="noopener">FreeSewing (MIT)</a>, <a href="https://github.com/FashionFreedom/Seamly2D" target="_blank" rel="noopener">Seamly2D (GPLv3)</a>, <a href="https://archive.org/details/cutterspractical00vinc/" target="_blank" rel="noopener">W. D. F. Vincent, The Cutters' Practical Guide (archive.org)</a>.</p></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

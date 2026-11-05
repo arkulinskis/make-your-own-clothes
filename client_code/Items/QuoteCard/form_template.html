@@ -1,0 +1,28 @@
+<div class="qc-host">
+  <article class="ui-card qc-card" anvil:name="box">
+    <div class="qc-head">
+      <div><anvil-component type="Label" name="tailor" prop:role='["card-h3"]'></anvil-component>
+        <anvil-component type="Label" name="verified" prop:role='["badge", "badge-good"]' prop:text="Guild verified"></anvil-component>
+        <anvil-component type="Label" name="who" prop:role='["fine-print"]'></anvil-component></div>
+      <div class="qc-price"><anvil-component type="Label" name="price" prop:role='["st-big"]'></anvil-component>
+        <anvil-component type="Label" name="terms" prop:role='["fine-print"]'></anvil-component></div>
+    </div>
+    <anvil-component type="Label" name="message" prop:role='["qc-msg"]'></anvil-component>
+    <anvil-component type="Label" name="status" prop:role='["badge"]'></anvil-component>
+    <div class="ui-row" anvil:name="acts">
+      <anvil-component type="Button" name="accept_button" prop:text="Accept this quote" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+      <anvil-component type="Button" name="decline_button" prop:text="Decline" prop:role='["btn", "btn-ghost"]'></anvil-component>
+    </div>
+    <div class="ui-note" anvil:name="accepted_note">
+      <anvil-component type="Label" name="accepted_text"></anvil-component>
+      <anvil-component type="Button" name="share_button" prop:text="Share my email with this tailor" prop:role='["btn", "btn-sm", "ic-mail"]'></anvil-component>
+    </div>
+    <div class="qc-thread" anvil:name="thread_part">
+      <anvil-component type="RepeatingPanel" name="thread" prop:item_template="Make_Your_Own_Clothes.Items.MessageRow" prop:role='["ui-stack"]'></anvil-component>
+      <div anvil:name="reply_part" class="ui-stack">
+        <label class="ui-field"><span>Write to the tailor</span><anvil-component type="TextArea" name="reply_box" prop:placeholder="A question about the quote, the fitting, the cloth…" prop:height="70"></anvil-component></label>
+        <div class="ui-row end"><anvil-component type="Button" name="send_button" prop:text="Send" prop:role='["btn", "btn-sm", "ic-send"]'></anvil-component></div>
+      </div>
+    </div>
+  </article>
+</div>

@@ -1,0 +1,25 @@
+---
+custom_component: true
+properties: []
+toolbox_item:
+  title: Tailor's docket
+  group: Make Your Own Clothes
+help_text: The tailor's docket for a garment (pattern, size or measurements, options, cloth, fit changes). show(docket_dict, code, pid).
+---
+<div class="tl-docket-host">
+  <div class="tl-docket">
+    <span class="my-stamp">Tailor's docket</span>
+    <anvil-component type="Label" name="agent" prop:role='["my-code"]'></anvil-component>
+    <anvil-component type="Label" name="code" prop:role='["card-h3"]'></anvil-component>
+    <anvil-component type="Label" name="meta" prop:role='["fine-print"]'></anvil-component>
+    <anvil-component type="RepeatingPanel" name="rows" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["tl-tbl"]'></anvil-component>
+    <anvil-component type="Label" name="private_note" prop:role='["fine-print"]'></anvil-component>
+    <div class="tl-facts">
+      <p><b>Options:</b> <anvil-component type="Label" name="opts" prop:role='["inline"]'></anvil-component></p>
+      <p><b>Cloth:</b> <anvil-component type="Label" name="cloth" prop:role='["inline"]'></anvil-component></p>
+      <p anvil:name="fit_line"><b>Fit changes from the toile:</b> <anvil-component type="Label" name="fit" prop:role='["inline"]'></anvil-component></p>
+      <p anvil:name="edit_line"><b>Hand-redrawn pieces:</b> <anvil-component type="Label" name="edits" prop:role='["inline"]'></anvil-component></p>
+      <p anvil:name="notes_line"><b>Notes:</b> <anvil-component type="Label" name="notes" prop:role='["inline"]'></anvil-component></p>
+    </div>
+  </div>
+</div>

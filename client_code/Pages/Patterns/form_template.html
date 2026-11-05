@@ -1,0 +1,47 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="pa-hero">
+        <div>
+          <div class="eyebrow">The pattern archive</div>
+          <h1 class="pa-h1">Patterns, cut to you.</h1>
+          <p class="muted pa-lead">Eleven classic garments, from a T-shirt to a men's shirt and a tailored jacket, drafted live from your measurements with the tailor's block method. Begin one, redraw it on the cutting table, sew it in the fitting room, then follow the making book.</p>
+        </div>
+        <a class="ui-card pa-dossier" href="#measure"><i class="ic ic-tape"></i>
+          <span><anvil-component type="Label" name="dossier_title" prop:role='["strong"]'></anvil-component>
+          <anvil-component type="Label" name="dossier_sub" prop:role='["fine-print"]'></anvil-component></span></a>
+      </div>
+      <div class="pa-kinds">
+        <anvil-component type="RepeatingPanel" name="kind_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component>
+      </div>
+      <div class="pa-grid">
+        <anvil-component type="RepeatingPanel" name="panel" prop:item_template="Make_Your_Own_Clothes.Items.PatternCard" prop:role='["contents"]'></anvil-component>
+        <article class="ui-card pa-card pa-own" anvil:name="own_card">
+          <div class="art"><i class="ic ic-upload pa-own-ic"></i></div>
+          <div class="body">
+            <div class="meta"><span class="ui-badge brand">Your own</span></div>
+            <h3>Bring your own pattern</h3>
+            <p>Import an SVG from FreeSewing, Seamly2D or Inkscape, or trace a photo of a paper pattern. Redraw it, sew the seams in 3D and get a making book.</p>
+            <div class="acts">
+              <anvil-component type="Button" name="own_svg" prop:text="Import SVG" prop:role='["btn", "btn-sm", "ic-upload"]'></anvil-component>
+              <anvil-component type="Button" name="own_photo" prop:text="Trace a photo" prop:role='["btn", "btn-sm", "ic-camera"]'></anvil-component>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div anvil:name="local_part">
+        <div class="my-sec-title"><h2>On this browser</h2></div>
+        <anvil-component type="Label" name="local_note" prop:role='["muted-p"]'></anvil-component>
+        <div class="pa-local">
+          <anvil-component type="RepeatingPanel" name="local_panel" prop:item_template="Make_Your_Own_Clothes.Items.SmallCard" prop:role='["contents"]'></anvil-component>
+        </div>
+      </div>
+      <div class="my-sec-title"><h2>Where the patterns come from</h2></div>
+      <div class="pa-src">
+        <div class="ui-card"><h4>FreeSewing</h4><p class="small muted">An open-source (MIT) platform with dozens of made-to-measure designs, from body blocks (Brian, Bella, Breanna) to Simon, Jaeger, Wahid and Titan. Export an SVG there and import it here to redraw it.</p><a class="small" href="https://freesewing.eu/designs" target="_blank" rel="noopener">freesewing.eu/designs <i class="ic ic-external"></i></a></div>
+        <div class="ui-card"><h4>Seamly2D</h4><p class="small muted">Free, GPLv3 parametric pattern-drafting software for Windows, macOS and Linux. Draft blocks from measurement files, export SVG, bring them here for 3D.</p><a class="small" href="https://github.com/FashionFreedom/Seamly2D" target="_blank" rel="noopener">github.com/FashionFreedom/Seamly2D <i class="ic ic-external"></i></a></div>
+        <div class="ui-card"><h4>The tailoring manuals</h4><p class="small muted">Victorian cutting systems such as W. D. F. Vincent's <i>Cutters' Practical Guide</i> (1890s) taught the block method these drafts follow: draft a block from measurements, then redraw it.</p><a class="small" href="https://archive.org/details/cutterspractical00vinc/" target="_blank" rel="noopener">Scans on archive.org <i class="ic ic-external"></i></a></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

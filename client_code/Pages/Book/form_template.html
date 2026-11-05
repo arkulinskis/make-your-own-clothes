@@ -1,0 +1,40 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-empty" anvil:name="empty_part"><i class="ic ic-book"></i>
+        <anvil-component type="Label" name="empty_title" prop:role='["empty-h"]'></anvil-component>
+        <anvil-component type="Label" name="empty_text"></anvil-component>
+        <a class="ui-btn primary" href="#studio">Open the studio</a></div>
+      <div anvil:name="book_part">
+        <div class="ui-card bk-cover">
+          <anvil-component type="Make_Your_Own_Clothes.Components.Html" name="swatch"></anvil-component>
+          <div class="bk-cover-in">
+            <anvil-component type="Label" name="eyebrow" prop:role='["eyebrow-brass"]'></anvil-component>
+            <anvil-component type="Label" name="code" prop:role='["page-h1"]'></anvil-component>
+            <anvil-component type="Label" name="meta" prop:role='["muted-p"]'></anvil-component>
+            <div class="bk-progress" anvil:name="progress"><i anvil:name="progress_fill"></i></div>
+          </div>
+          <div class="ui-row bk-noprint">
+            <a class="ui-btn" anvil:name="studio_link" href="#studio"><i class="ic ic-pen"></i>Studio</a>
+            <anvil-component type="Button" name="print_button" prop:text="Print" prop:role='["btn", "btn-brass", "ic-print"]'></anvil-component>
+          </div>
+        </div>
+        <div class="bk-grid">
+          <div>
+            <anvil-component type="RepeatingPanel" name="sections" prop:item_template="Make_Your_Own_Clothes.Items.BookSection" prop:role='["contents"]'></anvil-component>
+            <div class="ui-card bk-done" anvil:name="done_card">
+              <span class="my-stamp good">Mission complete</span>
+              <h2 class="bk-done-h">Beautifully made.</h2>
+              <anvil-component type="Label" name="done_text" prop:role='["muted-p"]'></anvil-component>
+              <anvil-component type="Button" name="share_button" prop:text="Hang it in the showroom" prop:role='["btn", "btn-primary", "ic-hanger"]'></anvil-component>
+            </div>
+          </div>
+          <aside class="bk-3d" anvil:name="aside">
+            <div class="box"><anvil-component type="Make_Your_Own_Clothes.Components.Fitting" name="fit"></anvil-component></div>
+            <anvil-component type="Label" name="cap" prop:role='["fine-print"]' prop:text="The garment as it will be after each step. Drag to turn it."></anvil-component>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

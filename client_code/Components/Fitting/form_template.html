@@ -1,0 +1,17 @@
+---
+custom_component: true
+properties: []
+events:
+  - name: step
+    description: The fitting moved to another making step (k = -1 for "pinned to the form")
+    parameters:
+      - name: k
+toolbox_item:
+  title: Fitting room (3D)
+  group: Make Your Own Clothes
+help_text: |
+  The three.js mannequin + cloth simulation (theme/assets/my-sim.js, MY.Fitting). It mounts when shown and is
+  destroyed when hidden; calls made before that are queued. load_project(pr_js), load_body(m, figure),
+  set_step(k, animate), sew_all(), view("front"|"side"|"back"), toggle("body"|"ease"|"spin"|"wind", on), frame(y, d).
+---
+<div class="fit-host"><div class="fit-box" anvil:name="box"></div></div>

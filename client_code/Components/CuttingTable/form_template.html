@@ -1,0 +1,17 @@
+---
+custom_component: true
+properties: []
+events:
+  - name: change
+    description: Something happened on the table (kind = edit | edit-quiet | sel | tool | sew | readonly | toast:<text> | toast-ok:<text>)
+    parameters:
+      - name: kind
+toolbox_item:
+  title: Cutting table
+  group: Make Your Own Clothes
+help_text: |
+  The Studio's pattern editor (theme/assets/my-table.js, MY.Table): toolbar + SVG canvas. start(pr_js, mine) mounts it
+  on the live project; `api` is the engine (panel(), setTool, undo, setOpt ...). It is a JavaScript engine because it
+  redraws hundreds of Bézier points on every pointer move.
+---
+<div class="table-host"><div class="table-box" anvil:name="box"></div></div>

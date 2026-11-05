@@ -1,0 +1,14 @@
+<div class="rv-host">
+  <div class="ui-item rv-item">
+    <div class="meta"><span class="ui-badge">Message</span>
+      <anvil-component type="Label" name="who" prop:role='["strong", "inline"]'></anvil-component>
+      <anvil-component type="Label" name="when" prop:role='["inline", "fine-print"]'></anvil-component></div>
+    <p class="rv-for">To the member about <anvil-component type="Label" name="req" prop:role='["inline", "strong"]'></anvil-component></p>
+    <anvil-component type="Label" name="body" prop:role='["msg-body"]'></anvil-component>
+    <label class="ui-field"><span>Private note (only admins see it)</span><anvil-component type="TextArea" name="note_box" prop:height="54"></anvil-component></label>
+    <div class="ui-row">
+      <anvil-component type="Button" name="approve_button" prop:text="Pass it on" prop:role='["btn", "btn-sm", "btn-primary", "ic-check"]'></anvil-component>
+      <anvil-component type="Button" name="reject_button" prop:text="Don't pass it on" prop:role='["btn", "btn-sm", "btn-danger", "ic-x"]'></anvil-component>
+    </div>
+  </div>
+</div>

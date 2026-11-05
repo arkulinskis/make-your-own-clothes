@@ -1,0 +1,19 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="my-head">
+        <div><div class="eyebrow">The commission board</div><h1>Garments waiting for a maker</h1>
+          <p>Members drafted these to their own measurements and would like a seamstress or tailor to make them up. Send a quote: the shop reads it, then passes it on. Measurements go to the maker the member chooses.</p></div>
+        <a class="ui-btn" href="#tailor"><i class="ic ic-needle"></i>Join the guild</a>
+      </div>
+      <div class="ui-note rq-guild" anvil:name="guild_note"><i class="ic ic-info"></i><anvil-component type="Label" name="guild_text" prop:role='["inline"]'></anvil-component></div>
+      <div class="rq-tools">
+        <anvil-component type="RepeatingPanel" name="kind_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component>
+        <label class="ui-field rq-city"><span class="ui-sr">City</span><anvil-component type="TextBox" name="city_box" prop:placeholder="City or neighbourhood" prop:type="search"></anvil-component></label>
+        <anvil-component type="CheckBox" name="mine_check" prop:text="Matched for me"></anvil-component>
+      </div>
+      <div class="rq-grid"><anvil-component type="RepeatingPanel" name="panel" prop:item_template="Make_Your_Own_Clothes.Items.RequestCard" prop:role='["contents"]'></anvil-component></div>
+      <div class="ui-empty" anvil:name="empty"><i class="ic ic-send"></i><h3>No open requests here</h3><p>Try another filter, or come back soon: members post new garments every week.</p></div>
+    </div>
+  </anvil-block>
+</anvil-form>

@@ -1,0 +1,17 @@
+<div class="bk-step-host">
+  <article class="ui-card bk-step" anvil:name="box">
+    <anvil-component type="Label" name="num" prop:role='["bk-num"]'></anvil-component>
+    <div class="bk-step-in">
+      <h3><anvil-component type="Label" name="title" prop:role='["inline"]'></anvil-component></h3>
+      <anvil-component type="Label" name="text" prop:role='["bk-text"]'></anvil-component>
+      <anvil-component type="RepeatingPanel" name="settings" prop:item_template="Make_Your_Own_Clothes.Items.SetChip" prop:role='["bk-set"]'></anvil-component>
+      <anvil-component type="Make_Your_Own_Clothes.Components.Html" name="diagram"></anvil-component>
+      <div class="bk-lay" anvil:name="lay_box"><anvil-component type="Make_Your_Own_Clothes.Components.Html" name="lay"></anvil-component></div>
+      <anvil-component type="Label" name="tip" prop:role='["bk-tip"]'></anvil-component>
+      <div class="bk-acts">
+        <anvil-component type="CheckBox" name="done_check" prop:text="Done"></anvil-component>
+        <anvil-component type="Button" name="show_button" prop:text="Show in 3D" prop:role='["btn", "btn-sm", "ic-cube"]'></anvil-component>
+      </div>
+    </div>
+  </article>
+</div>

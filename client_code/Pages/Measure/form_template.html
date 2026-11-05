@@ -1,0 +1,41 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="my-head">
+        <div>
+          <div class="eyebrow">The fitting room · classified</div>
+          <h1>Your measurement dossier</h1>
+          <p>Thirteen numbers, and every pattern in the archive drafts itself to you. Measure over close-fitting underwear, tape snug but not tight, and ask a friend for the back.</p>
+        </div>
+        <anvil-component type="Label" name="stamp" prop:role='["my-stamp"]'></anvil-component>
+      </div>
+      <div class="ms-grid">
+        <div>
+          <div class="ms-bar"><anvil-component type="RepeatingPanel" name="figure_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+          <div class="ms-bar"><span class="small muted">Start from a size:</span>
+            <anvil-component type="RepeatingPanel" name="size_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component>
+            <span class="ui-spacer"></span>
+            <anvil-component type="RepeatingPanel" name="unit_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component>
+          </div>
+          <anvil-component type="Label" name="warn" prop:role='["ms-warn"]'></anvil-component>
+          <div class="ms-fields">
+            <anvil-component type="RepeatingPanel" name="fields" prop:item_template="Make_Your_Own_Clothes.Items.MeasureField" prop:role='["contents"]'></anvil-component>
+          </div>
+          <div class="ui-row ms-acts">
+            <anvil-component type="Button" name="save_button" prop:text="Save the dossier" prop:role='["btn", "btn-primary", "btn-lg", "ic-check"]'></anvil-component>
+            <a class="ui-btn lg" href="#patterns">See the patterns <i class="ic ic-arrow"></i></a>
+          </div>
+          <p class="small muted" anvil:name="guest_note">Saved in this browser. <a href="#auth/signup">Open an account</a> to keep it with you on every device.</p>
+        </div>
+        <div class="ms-side">
+          <div class="ui-card ms-diagram">
+            <anvil-component type="Make_Your_Own_Clothes.Components.MeasureDiagram" name="diagram"></anvil-component>
+            <p class="small ms-cap"><anvil-component type="Label" name="f_title" prop:role='["inline", "strong"]'></anvil-component> · <anvil-component type="Label" name="f_text" prop:role='["inline", "muted"]'></anvil-component></p>
+          </div>
+          <div class="ms-3d"><anvil-component type="Make_Your_Own_Clothes.Components.Fitting" name="fit"></anvil-component></div>
+          <p class="small muted">Your mannequin, built from these numbers. Drag to turn it.</p>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

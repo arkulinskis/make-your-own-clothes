@@ -1,0 +1,15 @@
+---
+custom_component: true
+properties:
+  - name: html
+    type: string
+    default_value: ""
+    description: Markup drawn by one of the JavaScript engines (an SVG, a meter, a swatch)
+toolbox_item:
+  title: Engine drawing
+  group: Make Your Own Clothes
+help_text: |
+  Shows markup the engines in theme/assets/my-*.js draw (pattern thumbnails, step diagrams, lay plans, weave
+  diagrams, meters). Only ever give it markup the engines made, never text people typed.
+---
+<div class="my-html-host"><div class="my-html" anvil:name="box"></div></div>

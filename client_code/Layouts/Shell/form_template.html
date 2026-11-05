@@ -1,0 +1,99 @@
+---
+layout_metadata:
+  title: The shopfront
+  description: Bottle-green fascia header with the menu and account button, the page in the middle, the footer and the phone tab bar with a More sheet
+---
+<div class="ui ui-shell">
+  <header class="ui-header">
+    <div class="ui-header-in">
+      <a class="ui-brand" anvil:name="brand" href="#landing" aria-label="Make Your Own Clothes home">
+        <img src="_/theme/icon.svg" alt="" width="34" height="34"><span>Make Your Own Clothes<small>Bespoke tailors · Est. 2026</small></span>
+      </a>
+      <nav class="ui-nav" aria-label="Main">
+        <anvil-component type="RepeatingPanel" name="nav_panel" prop:item_template="Make_Your_Own_Clothes.Items.NavLink" prop:role='["contents"]'></anvil-component>
+      </nav>
+      <div class="ui-header-right">
+        <div class="ui-row" anvil:name="guest_actions">
+          <a class="ui-btn ghost" href="#auth">Sign in</a>
+          <a class="ui-btn primary" href="#auth/signup">Open an account</a>
+        </div>
+        <div anvil:name="member_actions">
+          <anvil-component type="Button" name="avatar_button" prop:role='["avatar"]' prop:tooltip="Your account"></anvil-component>
+          <div class="ui-menu" anvil:name="menu">
+            <div class="ui-menu-head">
+              <anvil-component type="Label" name="menu_name" prop:role='["menu-name"]'></anvil-component>
+              <anvil-component type="Label" name="menu_email" prop:role='["menu-email"]'></anvil-component>
+            </div>
+            <a href="#wardrobe"><i class="ic ic-hanger"></i>My wardrobe</a>
+            <a href="#measure"><i class="ic ic-tape"></i>My measurements</a>
+            <a href="#tailor"><i class="ic ic-send"></i>Send to a seamstress</a>
+            <a href="#requests"><i class="ic ic-needle"></i>The commission board</a>
+            <a href="#profile"><i class="ic ic-user"></i>Your profile</a>
+            <a href="#admin" anvil:name="admin_link"><i class="ic ic-shield"></i>Admin</a>
+            <div class="ui-menu-block"><span class="small muted">Appearance</span>
+              <div class="ui-seg" role="group" aria-label="Appearance">
+                <button type="button" data-theme-set="auto" anvil:name="theme_auto" anvil:on-dom:click="self.theme_click">Auto</button>
+                <button type="button" data-theme-set="light" anvil:name="theme_light" anvil:on-dom:click="self.theme_click">Light</button>
+                <button type="button" data-theme-set="dark" anvil:name="theme_dark" anvil:on-dom:click="self.theme_click">Dark</button>
+              </div>
+            </div>
+            <button type="button" anvil:on-dom:click="self.feedback_click"><i class="ic ic-chat"></i>Submit feedback</button>
+            <button type="button" data-lk-open="overview"><i class="ic ic-lock"></i>Privacy &amp; Terms</button>
+            <button type="button" anvil:on-dom:click="self.sign_out_click"><i class="ic ic-logout"></i>Sign out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="ui-main">
+    <anvil-slot name="content"></anvil-slot>
+  </main>
+
+  <footer class="ui-footer">
+    <div class="ui-footer-in">
+      <div class="ui-footer-brand">
+        <a class="ui-brand" href="#landing"><img src="_/theme/icon.svg" alt="" width="34" height="34"><span>Make Your Own Clothes<small>Bespoke tailors · Est. 2026</small></span></a>
+        <p class="muted small">Bespoke patterns, cut to you. Measure twice, cut once.</p>
+      </div>
+      <div class="ui-footer-links">
+        <a href="#patterns">Pattern archive</a>
+        <a href="#fabrics">Cloth room</a>
+        <a href="#measure">Measurements</a>
+        <a href="#showroom">Showroom</a>
+        <a href="#requests">Commission board</a>
+        <a href="#tailor">Tailors</a>
+        <a href="#landing">About</a>
+        <a href="https://prepsto.com/#f/tj27dtw" target="_blank" rel="noopener" data-prepsto-open>Submit feedback</a>
+        <button type="button" data-lk-open="overview">Privacy &amp; Terms</button>
+      </div>
+      <div class="ui-footer-legal small muted">
+        <anvil-component type="Label" name="copyright_label" prop:role='["fine-print"]'></anvil-component>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="ui-tabbar" aria-label="Main">
+    <anvil-component type="RepeatingPanel" name="tab_panel" prop:item_template="Make_Your_Own_Clothes.Items.NavLink" prop:role='["contents"]'></anvil-component>
+    <a href="#landing" class="more" anvil:name="more_link" anvil:on-dom:click="self.more_click" aria-haspopup="true"><i class="ic ic-menu"></i><span>More</span></a>
+    <div class="my-sheet" anvil:name="sheet">
+      <a href="#wardrobe" anvil:name="sheet_wardrobe"><i class="ic ic-hanger"></i>Wardrobe</a>
+      <a href="#measure" anvil:name="sheet_measure"><i class="ic ic-tape"></i>Measure</a>
+      <a href="#showroom"><i class="ic ic-hat"></i>Showroom</a>
+      <a href="#tailor"><i class="ic ic-send"></i>Send to a seamstress</a>
+      <a href="#requests"><i class="ic ic-needle"></i>The commission board</a>
+      <a href="#landing"><i class="ic ic-info"></i>About the shop</a>
+      <a href="#profile" anvil:name="sheet_profile"><i class="ic ic-user"></i>Your profile</a>
+      <a href="#admin" anvil:name="sheet_admin"><i class="ic ic-shield"></i>Admin</a>
+      <button type="button" anvil:name="sheet_signout" anvil:on-dom:click="self.sign_out_click"><i class="ic ic-logout"></i>Sign out</button>
+      <a href="#auth" anvil:name="sheet_signin"><i class="ic ic-user"></i>Sign in or open an account</a>
+      <button type="button" anvil:on-dom:click="self.feedback_click"><i class="ic ic-chat"></i>Submit feedback</button>
+      <button type="button" data-lk-open="overview"><i class="ic ic-lock"></i>Privacy &amp; Terms</button>
+      <div class="ui-seg" role="group" aria-label="Appearance">
+        <button type="button" data-theme-set="auto" anvil:name="sheet_auto" anvil:on-dom:click="self.theme_click">Auto</button>
+        <button type="button" data-theme-set="light" anvil:name="sheet_light" anvil:on-dom:click="self.theme_click">Light</button>
+        <button type="button" data-theme-set="dark" anvil:name="sheet_dark" anvil:on-dom:click="self.theme_click">Dark</button>
+      </div>
+    </div>
+  </nav>
+</div>

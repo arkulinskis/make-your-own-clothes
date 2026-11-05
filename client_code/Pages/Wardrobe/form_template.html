@@ -1,0 +1,31 @@
+<anvil-form layout="Make_Your_Own_Clothes.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="wd-top">
+        <div>
+          <div class="eyebrow">Your wardrobe</div>
+          <anvil-component type="Label" name="hello" prop:role='["page-h1"]'></anvil-component>
+          <anvil-component type="Label" name="summary" prop:role='["muted-p"]'></anvil-component>
+        </div>
+        <a class="ui-card wd-dossier" href="#measure">
+          <span class="ui-row"><i class="ic ic-tape"></i><b>Measurement dossier</b></span>
+          <anvil-component type="Label" name="dossier_label" prop:role='["fine-print", "wd-dossier-text"]'></anvil-component>
+        </a>
+      </div>
+      <div class="ui-note wd-import" anvil:name="import_note">
+        <i class="ic ic-upload"></i>
+        <anvil-component type="Label" name="import_label" prop:role='["inline"]'></anvil-component>
+        <anvil-component type="Button" name="import_button" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component>
+      </div>
+      <div class="wd-grid">
+        <anvil-component type="RepeatingPanel" name="panel" prop:item_template="Make_Your_Own_Clothes.Items.ProjectCard" prop:role='["contents"]'></anvil-component>
+        <a class="ui-card wd-new" href="#patterns"><span class="wd-new-in"><i class="ic ic-plus"></i><span class="wd-new-h">Begin a new garment</span><span class="small">Eleven patterns, or bring your own.</span></span></a>
+      </div>
+      <div class="my-sec-title" anvil:name="desk_title"><h2>At the commission desk</h2></div>
+      <div class="ui-grid two" anvil:name="desk">
+        <a class="ui-card tight wd-desk" href="#tailor"><b><i class="ic ic-send"></i>Your requests to a tailor</b><anvil-component type="Label" name="req_label" prop:role='["fine-print"]'></anvil-component></a>
+        <a class="ui-card tight wd-desk" href="#requests"><b><i class="ic ic-needle"></i>The commission board</b><anvil-component type="Label" name="quote_label" prop:role='["fine-print"]'></anvil-component></a>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>
