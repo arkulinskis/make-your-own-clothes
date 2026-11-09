@@ -71,7 +71,7 @@ class Shell(ShellTemplate):
             self.sheet.visible = False
 
     def _key(self, event):
-        if event.key == "Escape":
+        if getattr(event, "key", None) == "Escape":
             self.menu.visible = False
             self.sheet.visible = False
 

@@ -29,7 +29,7 @@ class SeamRow(SeamRowTemplate):
             self.parent.raise_event("x-seam", action="toggle", id=self.item["id"])
 
     def box_key(self, event):
-        if event.key in ("Enter", " "):
+        if getattr(event, "key", None) in ("Enter", " "):
             event.preventDefault()
             self.box_click(event)
 
