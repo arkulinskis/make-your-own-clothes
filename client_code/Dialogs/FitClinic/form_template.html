@@ -1,0 +1,20 @@
+<div class="ui fcl-dialog">
+  <h2 class="dlg-h">The Fit Clinic</h2>
+  <p class="muted">Put the test garment on right side out, pin it closed at the centre front and stand in front of a mirror. Where does it go wrong? Pick the place, then what you see.</p>
+  <div class="fcl-areas"><anvil-component type="RepeatingPanel" name="area_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+  <div class="fcl-syms"><anvil-component type="RepeatingPanel" name="sym_panel" prop:item_template="Make_Your_Own_Clothes.Items.ClinicSymptom" prop:role='["contents"]'></anvil-component></div>
+  <div anvil:name="fix_part" class="ui-card ui-stack fcl-fix">
+    <div class="st-opt"><label>How much does it need?</label>
+      <anvil-component type="RepeatingPanel" name="amt_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+    <div class="fcl-say"><span class="small muted">The tailor's chalk note</span>
+      <anvil-component type="Label" name="phrase" prop:role='["fcl-phrase"]'></anvil-component>
+      <anvil-component type="Label" name="explain" prop:role='["fine-print"]'></anvil-component></div>
+    <div class="ui-row end"><anvil-component type="Button" name="add_button" prop:text="Add to my fit notes" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component></div>
+  </div>
+  <div anvil:name="tip_part" class="ui-card ui-stack fcl-tip">
+    <b>Fixed by hand, on the cutting table</b>
+    <anvil-component type="Label" name="tip_text"></anvil-component>
+  </div>
+  <p class="ui-hint">Before you change the pattern: check the toile was cut on the grain and sewn at the pattern's seam allowance, and pin out (or unpick) to find the amount. Change one thing, sew a new toile, look again.</p>
+  <div class="ui-row end"><anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component></div>
+</div>

@@ -5,7 +5,8 @@
    - MY.pieceSvg(piece, opts): one piece as SVG (cut line, seam line, fold, grain arrow, notches, label)
    - MY.patternThumb(draft, cloth): a little picture of every piece, filled with the cloth
    - MY.layout(draft, width, mode, nap): the cutting layout on the cloth + how much to buy
-   - MY.printPattern / MY.patternSvgFile / MY.projector: true-scale tiled printing, an SVG file, projector mode
+   - MY.printPattern / MY.patternSvgFile / MY.projector: true-scale tiled printing (blank tiles left out, half-diamond
+    match marks on every join, opts.testOnly = just the test-square page), an SVG file, projector mode
    - MY.importSvg(text): closed shapes from a pattern SVG (FreeSewing, Seamly2D, Inkscape...) in centimetres */
 (function () {
   'use strict';
@@ -287,32 +288,63 @@
       '<rect x="0" y="0" width="5" height="5" fill="none" stroke="#000" stroke-width=".08"/><text x="2.5" y="2.8" font-size=".8" text-anchor="middle">5 cm</text>' +
       arrangedSvgBody(dr, project, arr, sa, '#000') + '</svg>';
   };
-  MY.printPattern = function (dr, project, sa, paperKey) {
+  /* Which tiles carry part of a piece (by each placed piece's box): blank ones are left out of the print. */
+  function tileGrid(arr, tw, th) {
+    var cols = Math.ceil((arr.w + 1) / tw), rows = Math.ceil((arr.h + 1) / th), used = {}, n = 0;
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+      var x0 = c * tw, y0 = r * th, x1 = x0 + tw, y1 = y0 + th;
+      var hit = arr.placed.some(function (pl) { return pl.x < x1 && pl.x + pl.item.w > x0 && pl.y < y1 && pl.y + pl.item.h > y0; });
+      if (hit) { used[r + ':' + c] = true; n++; }
+    }
+    return { cols: cols, rows: rows, used: used, printed: n, skipped: cols * rows - n, on: function (r, c) { return !!used[r + ':' + c]; } };
+  }
+  /* Half-diamonds on every join between two printed pages (each page shows half; they meet when the pages butt up),
+     and a small cross at the corners where printed pages meet. Drawn once in pattern space: each page's viewBox clips it. */
+  function matchMarks(g, tw, th) {
+    var s = '', d = 0.7, L = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (var r = 0; r < g.rows; r++) for (var c = 0; c < g.cols; c++) {
+      if (!g.on(r, c)) continue;
+      var x0 = c * tw, y0 = r * th;
+      [0.25, 0.75].forEach(function (f) {
+        if (c + 1 < g.cols && g.on(r, c + 1)) { var x = x0 + tw, y = y0 + th * f; s += '<path d="M' + f2(x) + ' ' + f2(y - d) + ' L' + f2(x + d) + ' ' + f2(y) + ' L' + f2(x) + ' ' + f2(y + d) + ' L' + f2(x - d) + ' ' + f2(y) + ' Z" fill="#555"/>'; }
+        if (r + 1 < g.rows && g.on(r + 1, c)) { var xx = x0 + tw * f, yy = y0 + th; s += '<path d="M' + f2(xx - d) + ' ' + f2(yy) + ' L' + f2(xx) + ' ' + f2(yy - d) + ' L' + f2(xx + d) + ' ' + f2(yy) + ' L' + f2(xx) + ' ' + f2(yy + d) + ' Z" fill="#555"/>'; }
+      });
+      if (c + 1 < g.cols && g.on(r, c + 1)) s += '<text x="' + f2(x0 + tw - 1.1) + '" y="' + f2(y0 + th * 0.25 + 0.25) + '" font-size=".55" fill="#555" text-anchor="end">' + L[r % 26] + (c + 1) + '|' + L[r % 26] + (c + 2) + '</text>';
+      if (r + 1 < g.rows && g.on(r + 1, c)) s += '<text x="' + f2(x0 + tw * 0.25 + 1.1) + '" y="' + f2(y0 + th - 1) + '" font-size=".55" fill="#555">' + L[r % 26] + (c + 1) + '|' + L[(r + 1) % 26] + (c + 1) + '</text>';
+      if (c + 1 < g.cols && r + 1 < g.rows && g.on(r, c + 1) && g.on(r + 1, c) && g.on(r + 1, c + 1)) {
+        var cx = x0 + tw, cy = y0 + th; s += '<path d="M' + f2(cx - 0.8) + ' ' + f2(cy) + ' H' + f2(cx + 0.8) + ' M' + f2(cx) + ' ' + f2(cy - 0.8) + ' V' + f2(cy + 0.8) + '" stroke="#555" stroke-width=".04"/>';
+      }
+    }
+    return s;
+  }
+  MY.printPattern = function (dr, project, sa, paperKey, opts) {
+    opts = opts || {};
     var paper = PAPER[paperKey] || PAPER.a4, margin = 1, tw = paper.w - margin * 2, th = paper.h - margin * 2;
-    var cols = 3, arr = sheetArrange(dr, sa, cols * tw - 1);
-    cols = Math.ceil((arr.w + 1) / tw); var rows = Math.ceil((arr.h + 1) / th);
-    var body = arrangedSvgBody(dr, project, arr, sa, '#000');
+    var arr = sheetArrange(dr, sa, 3 * tw - 1), g = tileGrid(arr, tw, th), cols = g.cols, rows = g.rows;
+    var body = arrangedSvgBody(dr, project, arr, sa, '#000') + matchMarks(g, tw, th);
     var host = document.getElementById('my-print'); if (host) host.remove();
     host = document.createElement('div'); host.id = 'my-print';
     var style = '<style>@page { size: ' + (paperKey === 'letter' ? 'letter' : 'A4') + ' portrait; margin: ' + margin + 'cm; }</style>';
     var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var html = style + '<div class="pg intro" style="width:' + tw + 'cm;height:' + th + 'cm">' +
       '<h1>' + esc((project && project.code) || 'Your pattern') + '</h1><p><b>' + esc(dr.pat.name) + '</b> · ' + esc(project && project.size === 'custom' ? 'made to your measurements' : 'size ' + (project && project.size)) + ' · seam allowance ' + sa + ' cm included (cut on the solid line, sew on the dashed line).</p>' +
-      '<p>Print at <b>100% / actual size</b> (turn off "fit to page"). Check the test square measures exactly 5 cm. Trim each page along its border and tape them together by their labels: rows A, B, C… from the top, columns 1, 2, 3… from the left.</p>' +
+      '<p>Print at <b>100% / actual size</b> (turn off "fit to page"). Check the test square measures exactly 5 cm. Trim each page along its dotted border and tape them together by their labels: rows A, B, C… from the top, columns 1, 2, 3… from the left. Each half-diamond on an edge meets its other half on the next page: line them up and the pattern lines run straight across.</p>' +
       '<svg width="5cm" height="5cm" viewBox="0 0 5 5"><rect x=".02" y=".02" width="4.96" height="4.96" fill="none" stroke="#000" stroke-width=".04"/><text x="2.5" y="2.7" font-size=".7" text-anchor="middle">5 × 5 cm</text></svg>' +
-      '<p style="margin-top:10pt"><b>' + (cols * rows) + ' pages</b> (' + rows + ' rows × ' + cols + ' columns):</p>' +
+      '<p style="margin-top:10pt"><b>' + g.printed + ' pattern pages</b> (' + rows + ' rows × ' + cols + ' columns' + (g.skipped ? '; the ' + g.skipped + ' grey ' + (g.skipped === 1 ? 'one is' : 'ones are') + ' blank and not printed: leave a gap there' : '') + '):</p>' +
       '<svg width="' + Math.min(tw, cols * 3) + 'cm" viewBox="0 0 ' + cols * 10 + ' ' + rows * 14 + '">' + (function () {
-        var g = ''; for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) g += '<rect x="' + c * 10 + '" y="' + r * 14 + '" width="10" height="14" fill="none" stroke="#000" stroke-width=".3"/><text x="' + (c * 10 + 5) + '" y="' + (r * 14 + 8) + '" font-size="4" text-anchor="middle">' + letters[r % 26] + (c + 1) + '</text>';
-        return g;
+        var m = ''; for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) { var on = g.on(r, c);
+          m += '<rect x="' + c * 10 + '" y="' + r * 14 + '" width="10" height="14" fill="' + (on ? 'none' : '#ddd') + '" stroke="' + (on ? '#000' : '#aaa') + '" stroke-width=".3"' + (on ? '' : ' stroke-dasharray="1 1"') + '/><text x="' + (c * 10 + 5) + '" y="' + (r * 14 + 8) + '" font-size="4" text-anchor="middle" fill="' + (on ? '#000' : '#999') + '">' + (on ? letters[r % 26] + (c + 1) : '–') + '</text>'; }
+        return m;
       })() + '</svg>' +
       '<p style="margin-top:10pt">Pieces: ' + dr.pieces.map(function (pc) { return esc(pc.name) + ' (' + esc(MY.cutText(pc).toLowerCase()) + ')'; }).join(', ') + '.</p></div>';
-    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+    if (!opts.testOnly) for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+      if (!g.on(r, c)) continue;
       var x0 = c * tw, y0 = r * th, lab = letters[r % 26] + (c + 1);
       html += '<div class="pg" style="width:' + tw + 'cm;height:' + th + 'cm"><svg xmlns="http://www.w3.org/2000/svg" width="' + tw + 'cm" height="' + th + 'cm" viewBox="' + x0 + ' ' + y0 + ' ' + tw + ' ' + th + '">' + MY.svgDefs('#000') +
         body + '<rect x="' + (x0 + 0.05) + '" y="' + (y0 + 0.05) + '" width="' + (tw - 0.1) + '" height="' + (th - 0.1) + '" fill="none" stroke="#999" stroke-width=".03" stroke-dasharray=".4 .3"/>' +
         '<text x="' + (x0 + 0.5) + '" y="' + (y0 + 1.1) + '" font-size=".8" fill="#777" font-family="Georgia, serif">' + lab + '</text>' +
-        (c < cols - 1 ? '<text x="' + (x0 + tw - 0.4) + '" y="' + (y0 + th / 2) + '" font-size=".6" fill="#777" text-anchor="end">' + letters[r % 26] + (c + 2) + ' →</text>' : '') +
-        (r < rows - 1 ? '<text x="' + (x0 + tw / 2) + '" y="' + (y0 + th - 0.4) + '" font-size=".6" fill="#777" text-anchor="middle">↓ ' + letters[(r + 1) % 26] + (c + 1) + '</text>' : '') +
+        (c < cols - 1 && g.on(r, c + 1) ? '<text x="' + (x0 + tw - 0.4) + '" y="' + (y0 + th / 2) + '" font-size=".6" fill="#777" text-anchor="end">' + letters[r % 26] + (c + 2) + ' →</text>' : '') +
+        (r < rows - 1 && g.on(r + 1, c) ? '<text x="' + (x0 + tw / 2) + '" y="' + (y0 + th - 0.4) + '" font-size=".6" fill="#777" text-anchor="middle">↓ ' + letters[(r + 1) % 26] + (c + 1) + '</text>' : '') +
         '</svg></div>';
     }
     host.innerHTML = html;
@@ -322,12 +354,12 @@
     window.addEventListener('afterprint', done);
     setTimeout(function () { try { window.print(); } catch (e) { done(); } }, 60);
     setTimeout(done, 120000);
-    return { pages: cols * rows, rows: rows, cols: cols };
+    return { pages: opts.testOnly ? 1 : g.printed + 1, rows: rows, cols: cols, skipped: g.skipped };
   };
   MY.printInfo = function (dr, sa, paperKey) {
     var paper = PAPER[paperKey] || PAPER.a4, tw = paper.w - 2, th = paper.h - 2, arr = sheetArrange(dr, sa, 3 * tw - 1);
-    var cols = Math.ceil((arr.w + 1) / tw), rows = Math.ceil((arr.h + 1) / th);
-    return { pages: cols * rows + 1, rows: rows, cols: cols, w: arr.w, h: arr.h };
+    var g = tileGrid(arr, tw, th);
+    return { pages: g.printed + 1, rows: g.rows, cols: g.cols, skipped: g.skipped, w: arr.w, h: arr.h };
   };
 
   /* ------------------------------------------------------------------ projector mode: the pattern at 1:1 on a cutting mat */

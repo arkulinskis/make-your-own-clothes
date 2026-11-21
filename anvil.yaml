@@ -705,14 +705,14 @@ native_deps:
     <!-- Prepsto feedback panel: every "Submit feedback" link and button opens it (it is the only feedback channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->
     <script src="https://prepsto.com/_/theme/widget.js" data-prepsto="tj27dtw" data-button="false" data-label="Submit feedback" async></script>
     <link rel="stylesheet" href="_/theme/icons.css?v=8960512985">
-    <link rel="stylesheet" href="_/theme/app.css?v=afc596afdf">
+    <link rel="stylesheet" href="_/theme/app.css?v=cd27ee411c">
     <script src="_/theme/app-kit.js?v=230397e666"></script>
     <!-- the drawing, drafting and 3D engines (theme/assets/my-*.js); the pages are Python Forms -->
     <script src="_/theme/my-core.js?v=794ab231bb"></script>
     <script src="_/theme/my-fabrics.js?v=ffbd96d43b"></script>
     <script src="_/theme/my-drafts.js?v=23bf11d952"></script>
-    <script src="_/theme/my-fit.js?v=632ec5e369"></script>
-    <script src="_/theme/my-draw.js?v=1ac8cc37f1"></script>
+    <script src="_/theme/my-fit.js?v=bb6077c076"></script>
+    <script src="_/theme/my-draw.js?v=94169d996f"></script>
     <script src="_/theme/my-sim.js?v=93dd581609"></script>
     <script src="_/theme/my-book.js?v=ced063940a"></script>
     <script src="_/theme/my-pages.js?v=c0e2e123b6"></script>

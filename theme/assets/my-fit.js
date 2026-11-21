@@ -5,6 +5,7 @@
    MY.fitMeasures(m, fit)        -> the measurements with every girth change applied (a copy)
    MY.fitShape(draft, fit)       -> moves hems of the drafted pieces (lengthen / shorten), in place
    MY.fitDifference(pr, item)    -> does this change alter this pattern at all? (draft with and without it)
+   MY.fitClinic()                -> the Fit Clinic's areas and symptoms (JSON), each with a phrase parseFit reads
    A project keeps them in pr.fit = [{id, text, kind, where, cm, effect, explain, on}] (on = false: kept but not applied).
 
    What the amounts mean (said back to the person in `explain`, before anything is redrafted):
@@ -222,5 +223,65 @@
     var base = JSON.parse(JSON.stringify(pr)); base.fit = (pr.fit || []).filter(function (f) { return f.id !== item.id; });
     var withIt = JSON.parse(JSON.stringify(base)); withIt.fit = base.fit.concat([Object.assign({}, item, { on: true })]);
     try { return Math.abs(shape(withIt) - shape(base)) > 1e-3; } catch (e) { return true; }
+  };
+  /* ------------------------------------------------------------------ the Fit Clinic: wrinkles -> a fit change
+     MY.fitClinic() -> JSON [{key, label, symptoms: [{id, title, why, svg, phrase | null, tip}]}].
+     `phrase` uses {a} for the amount ("let out the chest {a}") and must parse with MY.parseFit (fittest.js checks
+     every one); symptoms without a phrase can't be redrafted from words and give a tip instead. */
+  var OUT = {
+    top: 'M28 10 L36 8 Q40 14 44 8 L52 10 L66 20 L60 30 L54 26 L54 72 L26 72 L26 26 L20 30 L14 20 Z',
+    skirt: 'M27 8 L53 8 L63 72 L17 72 Z',
+    trousers: 'M23 8 L57 8 L61 76 L45 76 L40 34 L35 76 L19 76 Z'
+  };
+  function art(base, marks, dashed) {
+    return '<svg viewBox="0 0 80 82" aria-hidden="true"><path class="o" d="' + OUT[base] + '"/>' +
+      (dashed ? '<path class="d" d="' + dashed + '"/>' : '') + (marks ? '<path class="w" d="' + marks + '"/>' : '') + '</svg>';
+  }
+  var CLINIC = [
+    ['neck', 'Neck & collar', [
+      ['neck-gape', 'The neckline gapes or stands away', 'There is more neckline than neck: the edge has nowhere to sit, so it rolls or stands off.', art('top', 'M33 13 Q36 17 35 21 M47 13 Q44 17 45 21'), 'take in the neck {a}'],
+      ['neck-tight', 'The neckline chokes or pulls down at the front', 'The neck opening is too small, so the cloth drags towards it from the shoulders and chest.', art('top', 'M36 11 L31 19 M44 11 L49 19 M40 15 L40 22'), 'let out the neck {a}']]],
+    ['shoulders', 'Shoulders', [
+      ['sh-wide', 'The shoulder seam hangs past your shoulder bone', 'Too much width across the shoulders: the sleeve seam drops down your arm and the top of the sleeve collapses.', art('top', 'M53 11 Q57 18 55 25 M27 11 Q23 18 25 25'), 'take in the shoulders {a}'],
+      ['sh-narrow', 'Pulls across the back when you reach forward', 'The shoulders are too narrow: the armhole seam sits on top of the shoulder and the cloth strains between them.', art('top', 'M29 13 L40 23 L51 13 M31 18 L40 26 L49 18'), 'let out the shoulders {a}'],
+      ['sh-slope', 'Diagonal folds from the neck down to the armhole', 'Your shoulders slope more than the draft. A width change won’t fix it: the shoulder line itself needs to drop at the armhole.', art('top', 'M38 12 L52 22 M42 12 L28 22'), null,
+        'Pin out the fold along the shoulder seam (nothing at the neck, the full fold at the armhole). Then on the cutting table, move the armhole end of the shoulder seam down by that amount on the front and the back, and lower the armhole by the same.']]],
+    ['chest', 'Chest / bust', [
+      ['ch-tight', 'X-shaped pull lines across the front, buttons gape', 'Not enough room round the chest: the cloth is stretched between the fullest points.', art('top', 'M28 28 L52 46 M52 28 L28 46'), 'let out the chest {a}'],
+      ['ch-loose', 'Loose vertical folds on the front', 'More room than you need round the chest, so the extra hangs in folds.', art('top', 'M34 28 Q31 38 34 48 M46 28 Q49 38 46 48'), 'take in the chest {a}']]],
+    ['waist', 'Waist', [
+      ['wa-tight', 'Strain lines round the waist, the waistband digs in', 'The waist is smaller than you are: the cloth pulls flat and creases sideways.', art('top', 'M27 45 L53 45 M27 50 L53 50'), 'let out the waist {a}'],
+      ['wa-loose', 'Fabric bunches or bags at the waist', 'Extra room at the waist that has nowhere to go.', art('top', 'M30 42 Q35 48 30 55 M50 42 Q45 48 50 55'), 'take in the waist {a}'],
+      ['wa-sway', 'Fabric pools just above the waist at the back', 'Usually a sway back: the back is shorter at the centre than the pattern. A width change won’t fix it.', art('top', 'M30 44 Q40 39 50 44 M32 49 Q40 44 48 49'), null,
+        'Pin a horizontal tuck across the back above the waist: its full depth at the centre back, tapering to nothing at the side seams. On the cutting table, take the same wedge out of the back piece and redraw the centre back as a straight line.']]],
+    ['hips', 'Hips & seat', [
+      ['hi-tight', 'Pull lines across the hips, the skirt rides up', 'Not enough room round the hip or seat: the cloth climbs to where the body is narrower.', art('skirt', 'M23 40 L57 40 M22 47 L58 47'), 'let out the hips {a}'],
+      ['hi-loose', 'Loose folds under the seat or at the hips', 'More hip room than you need: the extra hangs in vertical folds.', art('skirt', 'M30 42 Q34 56 31 70 M50 42 Q46 56 49 70'), 'take in the hips {a}']]],
+    ['sleeves', 'Sleeves', [
+      ['sl-tight', 'Tight on the upper arm, drag lines when you bend', 'The sleeve is narrower than your arm, so it pulls when the muscle moves.', art('top', 'M57 17 L64 23 M55 21 L61 26'), 'let out the upper arm {a}'],
+      ['sl-loose', 'Sleeves wide and floppy', 'The sleeve has more width than your arm needs.', art('top', 'M60 19 Q64 23 61 28 M57 22 Q60 25 58 28'), 'take in the upper arm {a}'],
+      ['sl-long', 'Sleeves end past the wrist bone', 'The sleeve is longer than your arm.', art('top', null, 'M57 24 L62 19'), 'shorten the sleeves {a}'],
+      ['sl-short', 'Sleeves too short when you reach forward', 'The sleeve is shorter than your arm.', art('top', null, 'M58 34 L69 23'), 'lengthen the sleeves {a}'],
+      ['sl-cuff', 'The cuff is tight on the wrist', 'The wrist opening is too small for your hand to pass through comfortably.', art('top', 'M61 29 L67 23'), 'let out the wrist {a}']]],
+    ['length', 'Length & waistline', [
+      ['ln-long', 'The hem is too long', 'The body is longer than you want it.', art('top', null, 'M22 64 L58 64'), 'shorten the hem {a}'],
+      ['ln-short', 'The hem is too short', 'The body is shorter than you want it.', art('top', null, 'M22 79 L58 79'), 'lengthen the hem {a}'],
+      ['ln-waisthigh', 'The waistline sits above your natural waist', 'Your back is longer from the nape to the waist than the draft.', art('top', 'M27 40 L53 40', 'M24 47 L56 47'), 'lengthen the back length {a}'],
+      ['ln-waistlow', 'The waistline sits below your natural waist', 'Your back is shorter from the nape to the waist than the draft.', art('top', 'M27 50 L53 50', 'M24 43 L56 43'), 'shorten the back length {a}']]],
+    ['trousers', 'Trousers', [
+      ['tr-thigh', 'Tight across the thighs, sideways drag lines', 'Not enough room round the thigh.', art('trousers', 'M25 24 L37 28 M43 28 L55 24'), 'let out the thighs {a}'],
+      ['tr-thighloose', 'Baggy at the thighs', 'More thigh room than you need.', art('trousers', 'M28 20 Q26 28 29 36 M52 20 Q54 28 51 36'), 'take in the thighs {a}'],
+      ['tr-riseshort', 'The seam pulls up into the crotch, the back waist dips', 'The rise is too short for you: the crotch seam is pulled up to reach your waist.', art('trousers', 'M33 26 L40 34 L47 26 M30 20 L40 34 L50 20'), 'let out the rise {a}'],
+      ['tr-riselong', 'Extra cloth hangs below the crotch', 'The rise is deeper than you need, so the crotch sits low.', art('trousers', 'M33 38 Q40 44 47 38'), 'take in the rise {a}'],
+      ['tr-long', 'The legs pool at the ankle', 'The legs are longer than yours.', art('trousers', null, 'M16 68 L64 68'), 'shorten the legs {a}'],
+      ['tr-short', 'The legs are too short', 'The legs are shorter than yours.', art('trousers', null, 'M16 81 L64 81'), 'lengthen the legs {a}']]],
+    ['all', 'All over', [
+      ['al-tight', 'Tight everywhere: chest, waist and hip', 'The whole body is a little small. The amount is per side seam, on each piece (1 cm = 4 cm round).', art('top', 'M28 28 L52 46 M52 28 L28 46 M27 52 L53 52'), 'let out {a} at the side seams'],
+      ['al-loose', 'Loose everywhere: chest, waist and hip', 'The whole body is a little big. The amount is per side seam, on each piece (1 cm = 4 cm round).', art('top', 'M34 28 Q31 40 34 52 M46 28 Q49 40 46 52'), 'take in {a} at the side seams']]]
+  ];
+  MY.fitClinic = function () {
+    return JSON.stringify(CLINIC.map(function (a) {
+      return { key: a[0], label: a[1], symptoms: a[2].map(function (s) { return { id: s[0], title: s[1], why: s[2], svg: s[3], phrase: s[4], tip: s[5] || '' }; }) };
+    }));
   };
 })();

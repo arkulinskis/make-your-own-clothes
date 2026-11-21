@@ -66,10 +66,11 @@
 
               <div anvil:name="alter_panel" class="ui-stack">
                 <div class="fc-intro"><b>Fit changes from your test garment</b>
-                  <p class="small muted">Sewn a toile and pinned it? Type what it needed, the way a tailor would chalk it, and the pattern redrafts. Your hand edits stay.</p></div>
+                  <p class="small muted">Sewn a toile and pinned it? Type what it needed, the way a tailor would chalk it, and the pattern redrafts. Your hand edits stay. Not sure what a wrinkle means? Open the Fit Clinic.</p></div>
                 <label class="ui-field"><span>What did it need?</span>
                   <anvil-component type="TextArea" name="fit_box" prop:placeholder="e.g. Take in 1 cm at the side, let out the hips half an inch, shorten the sleeves 2 cm" prop:height="96"></anvil-component></label>
                 <div class="ui-row"><anvil-component type="Button" name="read_button" prop:text="Read it" prop:role='["btn", "ic-search"]'></anvil-component>
+                  <anvil-component type="Button" name="clinic_button" prop:text="Fit Clinic" prop:tooltip="Not sure what it needs? Pick the wrinkle you see" prop:role='["btn", "ic-target"]'></anvil-component>
                   <anvil-component type="Button" name="apply_button" prop:text="Redraft with these" prop:role='["btn", "btn-primary", "ic-refresh"]'></anvil-component></div>
                 <anvil-component type="RepeatingPanel" name="preview_panel" prop:item_template="Make_Your_Own_Clothes.Items.FitChangeRow" prop:role='["fc-list"]'></anvil-component>
                 <div anvil:name="applied_part" class="ui-stack">
@@ -158,6 +159,7 @@
               <anvil-component type="Label" name="print_note" prop:role='["fine-print"]'></anvil-component>
               <div class="ui-row">
                 <anvil-component type="Button" name="print_button" prop:text="Print" prop:role='["btn", "btn-primary", "ic-print"]'></anvil-component>
+                <anvil-component type="Button" name="test_button" prop:text="Test page first" prop:tooltip="Print only the page with the 5 cm test square" prop:role='["btn", "ic-ruler"]'></anvil-component>
                 <anvil-component type="Button" name="svg_button" prop:text="SVG for a copy shop" prop:role='["btn", "ic-download"]'></anvil-component>
                 <anvil-component type="Button" name="proj_button" prop:text="Projector" prop:role='["btn", "ic-eye"]'></anvil-component>
               </div>

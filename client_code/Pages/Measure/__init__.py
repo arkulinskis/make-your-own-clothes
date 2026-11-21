@@ -11,7 +11,8 @@ SIZES = ["XS", "S", "M", "L", "XL", "XXL"]
 
 class Measure(MeasureTemplate):
     """#measure: the dossier. 13 measurements (help + the highlighted figure), size presets, straight / curved
-    figures, cm or inches, sanity checks, and a 3D mannequin built from the numbers (it follows as you type)."""
+    figures, cm or inches, sanity checks, and a 3D mannequin built from the numbers (it follows as you type).
+    "Measure with me" (Dialogs/MeasureSession) walks through them one at a time, two readings each, averaged."""
 
     def __init__(self, args=(), **properties):
         super().__init__(**properties)
@@ -94,6 +95,20 @@ class Measure(MeasureTemplate):
         self._later.cancel()
         self.fit.load_body(self.d["m"], self.d["figure"])
         self.fit.frame(100, 340)
+
+    @handle("session_button", "click")
+    def session_button_click(self, **event_args):
+        from ...Dialogs.MeasureSession import MeasureSession
+        got = alert(MeasureSession(current=dict(self.d["m"])), buttons=[], large=True, role="app-dialog")
+        if not got:
+            return
+        for k, v in got.items():
+            self.d["m"][k] = round(float(v), 1)
+        self.d["size"] = "custom"
+        my.set_measure(self.d)
+        self.draw()
+        self._refresh_3d()
+        state.toast("%s in your dossier. Save it to draft every pattern to you." % state.plural(len(got), "measurement"), "ok")
 
     @handle("save_button", "click")
     def save_button_click(self, **event_args):

@@ -251,7 +251,7 @@ class Studio(StudioTemplate):
             self.applied_panel.items = d["fit"]
             on = len([f for f in d["fit"] if f["on"]])
             self.applied_count.text = "%d of %d applied" % (on, len(d["fit"]))
-            self.fit_box.enabled = self.read_button.enabled = self.mine
+            self.fit_box.enabled = self.read_button.enabled = self.clinic_button.enabled = self.mine
         elif self.panel == "pieces":
             self.piece_panel.items = d["pieces"]
             self.no_pieces.visible = not d["pieces"]
@@ -390,6 +390,18 @@ class Studio(StudioTemplate):
         self._preview = found
         self._render_panel()
 
+    @handle("clinic_button", "click")
+    def clinic_button_click(self, **event_args):
+        if not self.mine:
+            return
+        from ...Dialogs.FitClinic import FitClinic
+        phrase = alert(FitClinic(kind=str(my.jget(self.dr.pat, "kind", "") or "")), buttons=[], large=True, role="app-dialog")
+        if not phrase:
+            return
+        before = (self.fit_box.text or "").strip().rstrip(".,;")
+        self.fit_box.text = (before + ". " + phrase) if before else phrase
+        self.read_button_click()
+
     @handle("apply_button", "click")
     def apply_button_click(self, **event_args):
         good = [dict({k: v for k, v in f.items() if k != "preview"}, on=True) for f in self._preview if f.get("ok")]
@@ -519,12 +531,20 @@ class Studio(StudioTemplate):
         self.lay_note.text = "Folded lengthwise: pieces \"on the fold\" sit against the fold; every other piece cuts a mirrored pair." if lay.mode == "folded" else \
             "Single layer: pieces cut twice are turned over for the second cut."
         self.pp_chips.items = [{"key": k, "label": label, "on": o.get("paper") == k, "group": "pp"} for k, label in (("a4", "A4"), ("letter", "US Letter"))]
-        self.print_note.text = "%s pages, true scale, with a 5 cm test square and a page map. Seam allowance %s included." % (pi.pages, my.length(self._sa()))
+        skipped = int(my.jget(pi, "skipped", 0) or 0)
+        self.print_note.text = "%s pages, true scale, with a 5 cm test square, a page map and half-diamond match marks on every join.%s Seam allowance %s included." % (
+            pi.pages, (" %s with no pattern on them left out." % state.plural(skipped, "blank page")) if skipped else "", my.length(self._sa()))
 
     @handle("print_button", "click")
     def print_button_click(self, **event_args):
         o = state.store_get("layOpts", {"paper": "a4"})
         window.MY.printPattern(self.dr, self.pr, self._sa(), o.get("paper", "a4"))
+
+    @handle("test_button", "click")
+    def test_button_click(self, **event_args):
+        o = state.store_get("layOpts", {"paper": "a4"})
+        window.MY.printPattern(self.dr, self.pr, self._sa(), o.get("paper", "a4"), my.to_js({"testOnly": True}))
+        state.toast("Measure the square on the printout: exactly 5 cm? Then print the rest.", "ok")
 
     @handle("svg_button", "click")
     def svg_button_click(self, **event_args):

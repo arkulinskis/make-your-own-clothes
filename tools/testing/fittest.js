@@ -20,6 +20,15 @@ function expect(text, want) {
   console.log((ok ? 'ok   ' : 'BAD  ') + JSON.stringify(text) + ' -> ' + got.map(g => g.ok ? g.explain : '? ' + g.why).join(' | '));
   if (!ok) { bad++; console.log('     got', JSON.stringify(got.map(g => g.effect || g.why))); }
 }
+// the Fit Clinic: every phrase it offers must be read, at every amount it offers
+JSON.parse(MY.fitClinic()).forEach(a => a.symptoms.forEach(sy => {
+  if (!sy.phrase) { if (!sy.tip) { bad++; console.log('BAD  clinic ' + sy.id + ' has neither a phrase nor a tip'); } return; }
+  ['0.5 cm', '1 cm', '1.5 cm', '2 cm', '3 cm', '4 cm', '5 cm', '0.25 inch', '0.5 inch', '0.75 inch', '1 inch', '1.5 inch', '2 inch'].forEach(amt => {
+    const got = MY.parseFit(sy.phrase.replace('{a}', amt));
+    if (got.length !== 1 || !got[0].ok) { bad++; console.log('BAD  clinic ' + sy.id + ' ' + JSON.stringify(sy.phrase.replace('{a}', amt)) + ' -> ' + JSON.stringify(got)); }
+  });
+}));
+console.log('ok   Fit Clinic phrases');
 expect('take in 1 cm at the side', [{ m: { chest: -4, waist: -4, hip: -4 } }]);
 expect('Take in 1cm at the side seams at the waist', [{ m: { waist: -4 } }]);
 expect('let out the hips half an inch', [{ m: { hip: 1.3 } }]);

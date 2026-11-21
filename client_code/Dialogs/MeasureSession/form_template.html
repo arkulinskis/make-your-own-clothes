@@ -1,0 +1,45 @@
+<div class="ui msx-dialog">
+  <h2 class="dlg-h">Measure with me</h2>
+  <div anvil:name="start_part" class="ui-stack">
+    <p class="muted">One measurement at a time, each taken twice. If the two readings disagree we ask for a third, and the dossier gets the average. About ten minutes.</p>
+    <div class="st-opt"><label>Who is holding the tape?</label>
+      <anvil-component type="RepeatingPanel" name="mode_panel" prop:item_template="Make_Your_Own_Clothes.Items.Chip" prop:role='["chips"]'></anvil-component></div>
+    <anvil-component type="Label" name="mode_tips" prop:role='["msx-tips"]'></anvil-component>
+    <div class="ui-row end"><anvil-component type="Button" name="go_button" prop:text="Start measuring" prop:role='["btn", "btn-primary", "ic-tape"]'></anvil-component></div>
+  </div>
+  <div anvil:name="step_part" class="msx-step">
+    <div class="msx-fig"><anvil-component type="Make_Your_Own_Clothes.Components.MeasureDiagram" name="diagram"></anvil-component></div>
+    <div class="ui-stack">
+      <div class="msx-head"><anvil-component type="Label" name="count" prop:role='["fine-print"]'></anvil-component>
+        <div class="msx-bar"><div anvil:name="bar_fill" class="msx-fill"></div></div></div>
+      <anvil-component type="Label" name="m_title" prop:role='["msx-title"]'></anvil-component>
+      <anvil-component type="Label" name="m_help"></anvil-component>
+      <anvil-component type="Label" name="m_tip" prop:role='["msx-tip"]'></anvil-component>
+      <div class="msx-reads">
+        <label class="ui-field"><anvil-component type="Label" name="r1_label" prop:role='["inline"]'></anvil-component>
+          <anvil-component type="TextBox" name="r1" prop:type="number"></anvil-component></label>
+        <label class="ui-field"><anvil-component type="Label" name="r2_label" prop:role='["inline"]'></anvil-component>
+          <anvil-component type="TextBox" name="r2" prop:type="number"></anvil-component></label>
+        <label class="ui-field" anvil:name="r3_part"><anvil-component type="Label" name="r3_label" prop:role='["inline"]'></anvil-component>
+          <anvil-component type="TextBox" name="r3" prop:type="number"></anvil-component></label>
+      </div>
+      <anvil-component type="Label" name="msg" prop:role='["ms-warn"]'></anvil-component>
+      <div class="ui-row msx-nav">
+        <anvil-component type="Button" name="back_button" prop:text="Back" prop:role='["btn", "btn-ghost", "ic-back"]'></anvil-component>
+        <anvil-component type="Button" name="skip_button" prop:text="Skip" prop:role='["btn", "btn-ghost"]'></anvil-component>
+        <span class="ui-spacer"></span>
+        <anvil-component type="Button" name="next_button" prop:text="Next" prop:role='["btn", "btn-primary", "ic-arrow"]'></anvil-component>
+      </div>
+    </div>
+  </div>
+  <div anvil:name="done_part" class="ui-stack">
+    <anvil-component type="Label" name="done_title" prop:role='["msx-title"]'></anvil-component>
+    <anvil-component type="RepeatingPanel" name="summary" prop:item_template="Make_Your_Own_Clothes.Items.KV" prop:role='["my-kv", "small"]'></anvil-component>
+    <anvil-component type="Label" name="done_warn" prop:role='["ms-warn"]'></anvil-component>
+    <div class="ui-row end">
+      <anvil-component type="Button" name="again_button" prop:text="Go back over them" prop:role='["btn", "btn-ghost", "ic-back"]'></anvil-component>
+      <anvil-component type="Button" name="use_button" prop:text="Put them in my dossier" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+    </div>
+  </div>
+  <div class="ui-row end"><anvil-component type="Button" name="close_button" prop:text="Close without changes" prop:role='["btn", "btn-ghost"]'></anvil-component></div>
+</div>

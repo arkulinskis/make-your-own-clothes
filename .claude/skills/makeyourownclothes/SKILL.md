@@ -97,6 +97,13 @@ contact_shared, reviewed, reviewed_by), **bid_messages** (bid, request, sender, 
 - **The commission board:** public data is the `brief` (no m, no fit list, the nearest size); contact details are refused
   by `CONTACT_RE`; quotes and tailors' messages start as `review`; accepting a quote gives that tailor `docket` (with m);
   `share_contact` reveals the member's email. Keep every new way for the public to reach a member behind the review queue.
+- **Fit Clinic** (Dialogs/FitClinic + Items/ClinicSymptom, 2026-11-20): symptoms, drawings and phrases live in
+  `MY.fitClinic()` at the end of my-fit.js; a phrase uses `{a}` for the amount and must parse with MY.parseFit (fittest.js
+  checks every phrase at every offered amount). Symptoms that words can't fix have `phrase: null` and a `tip`.
+- **Measure with me** (Dialogs/MeasureSession): steps from MY.measureFields(); ALONE tips per key in the dialog; returns
+  {key: cm}; the Measure page merges it, sets size "custom" and keeps it in the browser until Save.
+- **Printing** (my-draw.js): tileGrid() leaves out tiles no piece's box touches, matchMarks() draws half-diamonds on joins
+  between printed pages (once, in pattern space; each page's viewBox clips it), `opts.testOnly` prints the intro page only.
 - Timers: never `Timer()` in code (it doesn't tick unless placed on a form): use `my.Later`.
 
 ## Gotchas
